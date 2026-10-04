@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Семейный Бюджет 2026</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #0f172a);
+            --text-color: var(--tg-theme-text-color, #f8fafc);
+            --card-bg: var(--tg-theme-secondary-bg-color, #1e293b);
+            --primary: #2563eb;
+            --green: #22c55e;
+            --green-bg: #166534;
+            --red: #ef4444;
+            --red-bg: #991b1b;
+            --border: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin: 4px 0 12px 0;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .month-selector {
+            display: flex;
+            overflow-x: auto;
+            gap: 6px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .month-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--text-color);
+        }
+
+        .month-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .kpi-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .kpi-val {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .kpi-val.green { color: #4ade80; }
+        .kpi-val.blue { color: #60a5fa; }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .cat-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: left;
+            padding: 8px 10px;
+        }
+
+        .cat-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        .num-cell {
+            text-align: right;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .badge.green { background: var(--green-bg); color: #4ade80; }
+        .badge.red { background: var(--red-bg); color: #fca5a5; }
+    </style>
+</head>
+<body>
+    <h2>📊 Семейный Бюджет 2026</h2>
+    <div class="month-selector" id="months"></div>
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-title">Доход</div>
+            <div class="kpi-val green" id="kpi-income">7 167 ₽</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Потрачено</div>
+            <div class="kpi-val" id="kpi-spent">4 657 ₽</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Остаток в бюджете</div>
+            <div class="kpi-val blue" id="kpi-rem-budget">2 510 ₽</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">На руках</div>
+            <div class="kpi-val blue" id="kpi-rem-hand">2 510 ₽</div>
+        </div>
+    </div>
+
+    <table class="cat-table">
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th style="text-align:right">Выделили</th>
+                <th style="text-align:right">Потрачено</th>
+                <th style="text-align:right">Остаток</th>
+            </tr>
+        </thead>
+        <tbody id="cat-body"></tbody>
+    </table>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const categoriesData = [
+            { name: "Аренда квартиры", allocated: 600, spent: 600 },
+            { name: "Комуналка", allocated: 0, spent: 0 },
+            { name: "Интернет", allocated: 25, spent: 20.84 },
+            { name: "Телефон", allocated: 35, spent: 31 },
+            { name: "Спотифай", allocated: 10, spent: 9 },
+            { name: "Продукты", allocated: 900, spent: 889.59 },
+            { name: "Хоз товары", allocated: 150, spent: 138.07 },
+            { name: "Транспорт", allocated: 200, spent: 179.65 },
+            { name: "Билеты на поезд", allocated: 100, spent: 83.88 },
+            { name: "Здоровье", allocated: 0, spent: 0 },
+            { name: "Аптека", allocated: 200, spent: 160.30 },
+            { name: "Спорт", allocated: 0, spent: 0 },
+            { name: "Спортзал", allocated: 0, spent: 0 },
+            { name: "Золотое Яблоко", allocated: 300, spent: 281.59 },
+            { name: "Уход за женой", allocated: 150, spent: 130 },
+            { name: "Одежда/Обувь", allocated: 500, spent: 481 },
+            { name: "Вайлдберриз", allocated: 400, spent: 391.43 },
+            { name: "Озон", allocated: 750, spent: 735.12 },
+            { name: "Шопинг", allocated: 0, spent: 0 },
+            { name: "Развлечения", allocated: 250, spent: 203.98 },
+            { name: "Отложить (накопления)", allocated: 2000, spent: 0 },
+            { name: "Непредвиденные расходы", allocated: 350, spent: 321.30 }
+        ];
+
+        function fmt(n) {
+            return Math.round(n).toLocaleString('ru-RU') + ' ₽';
+        }
+
+        const tbody = document.getElementById('cat-body');
+        categoriesData.forEach(c => {
+            const tr = document.createElement('tr');
+            const rem = c.allocated - c.spent;
+            const badgeClass = rem >= 0 ? 'green' : 'red';
+            tr.innerHTML = `
+                <td style="font-weight:600">${c.name}</td>
+                <td class="num-cell">${fmt(c.allocated)}</td>
+                <td class="num-cell">${fmt(c.spent)}</td>
+                <td class="num-cell"><span class="badge ${badgeClass}">${fmt(rem)}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>
