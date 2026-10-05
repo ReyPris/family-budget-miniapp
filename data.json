@@ -1,10 +1,15 @@
 {
   "month": "Октябрь 2026",
+  "income": 860.0,
+  "allocated": 1989.68,
+  "spent": 858.5,
+  "remainder_budget": 1131.18,
+  "remainder_hand": 1.5,
   "total_income": 860.0,
   "allocated_total": 1989.68,
-  "total_spent": 1017.62,
-  "budget_remainder": 972.06,
-  "real_remainder": -157.62,
+  "total_spent": 858.5,
+  "budget_remainder": 1131.18,
+  "real_remainder": 1.5,
   "incomes": [
     {
       "name": "ЗП муж",
@@ -28,133 +33,156 @@
       "name": "Аренда квартиры",
       "allocated": 600.0,
       "spent": 600.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "В ноль"
     },
     {
       "name": "Комуналка",
       "allocated": 120.0,
       "spent": 0.0,
-      "remainder": 120.0
+      "remainder": 120.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Интернет",
       "allocated": 28.0,
       "spent": 0.0,
-      "remainder": 28.0
+      "remainder": 28.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Телефон",
       "allocated": 31.0,
       "spent": 10.0,
-      "remainder": 21.0
+      "remainder": 21.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Спотифай",
       "allocated": 9.0,
       "spent": 0.0,
-      "remainder": 9.0
+      "remainder": 9.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Продукты",
       "allocated": 600.0,
-      "spent": 75.28,
-      "remainder": 524.72
+      "spent": 23.68,
+      "remainder": 576.32,
+      "status": "✓ Осталось"
     },
     {
       "name": "Хоз товары",
       "allocated": 50.0,
       "spent": 2.75,
-      "remainder": 47.25
+      "remainder": 47.25,
+      "status": "✓ Осталось"
     },
     {
       "name": "Транспорт",
       "allocated": 100.0,
-      "spent": 20.7,
-      "remainder": 79.3
+      "spent": 0.0,
+      "remainder": 100.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Билеты на поезд",
       "allocated": 111.68,
       "spent": 111.68,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "В ноль"
     },
     {
       "name": "Здоровье",
       "allocated": 0.0,
-      "spent": 75.52,
-      "remainder": -75.52
+      "spent": 0.0,
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Аптека",
       "allocated": 20.0,
       "spent": 0.0,
-      "remainder": 20.0
+      "remainder": 20.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Спорт",
       "allocated": 0.0,
       "spent": 0.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Спортзал",
       "allocated": 0.0,
       "spent": 0.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Золотое Яблоко",
       "allocated": 50.0,
       "spent": 0.0,
-      "remainder": 50.0
+      "remainder": 50.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Уход за женой",
       "allocated": 50.0,
       "spent": 0.0,
-      "remainder": 50.0
+      "remainder": 50.0,
+      "status": "✓ Осталось"
     },
     {
       "name": "Одежда/Обувь",
       "allocated": 0.0,
       "spent": 0.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Вайлдберриз",
       "allocated": 0.0,
       "spent": 82.5,
-      "remainder": -82.5
+      "remainder": -82.5,
+      "status": "⚠ В минус!"
     },
     {
       "name": "Озон",
       "allocated": 120.0,
       "spent": 18.99,
-      "remainder": 101.01
+      "remainder": 101.01,
+      "status": "✓ Осталось"
     },
     {
       "name": "Шопинг",
       "allocated": 0.0,
       "spent": 0.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Развлечения",
       "allocated": 0.0,
       "spent": 8.9,
-      "remainder": -8.9
+      "remainder": -8.9,
+      "status": "⚠ В минус!"
     },
     {
       "name": "Отложить (накопления)",
       "allocated": 0.0,
       "spent": 0.0,
-      "remainder": 0.0
+      "remainder": 0.0,
+      "status": "—"
     },
     {
       "name": "Непредвиденные расходы",
       "allocated": 100.0,
-      "spent": 11.3,
-      "remainder": 88.7
+      "spent": 0.0,
+      "remainder": 100.0,
+      "status": "✓ Осталось"
     }
-  ]
+  ],
+  "updated_at": "2026-10-05 21:07:35"
 }
