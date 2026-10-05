@@ -482,7 +482,7 @@
     <div class="header">
         <div>
             <div class="header-title">СЕМЕЙНЫЙ БЮДЖЕТ</div>
-            <div class="header-sub">Октябрь 2026</div>
+            <div class="header-sub">Октябрь 2026 • Google Таблицы Live</div>
         </div>
         <div class="user-badge" id="user-badge">
             <div class="status-dot"></div>
@@ -555,7 +555,7 @@
         <!-- Sync Button -->
         <button class="sync-btn" onclick="syncData(true)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-            Обновить из Excel
+            Обновить из Google Таблиц
         </button>
     </div>
 
@@ -588,12 +588,11 @@
 
         // Pre-baked October Data directly from C:\Users\REY\Desktop\Семейный_бюджет_2026.xlsx
         const OCTOBER_DATA = {
-    "month": "Октябрь 2026",
     "total_income": 860.0,
-    "total_spent": 858.5,
-    "real_remainder": 1.5,
     "allocated_total": 1989.68,
+    "total_spent": 858.5,
     "budget_remainder": 1131.18,
+    "real_remainder": 1.5,
     "incomes": [
         {
             "name": "ЗП муж",
@@ -618,154 +617,154 @@
             "allocated": 600.0,
             "spent": 600.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "В ноль"
         },
         {
             "name": "Комуналка",
             "allocated": 120.0,
             "spent": 0.0,
             "remainder": 120.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Интернет",
             "allocated": 28.0,
             "spent": 0.0,
             "remainder": 28.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Телефон",
             "allocated": 31.0,
             "spent": 10.0,
             "remainder": 21.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Спотифай",
             "allocated": 9.0,
             "spent": 0.0,
             "remainder": 9.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Продукты",
             "allocated": 600.0,
-            "spent": 75.28,
-            "remainder": 524.72,
-            "status": ""
+            "spent": 23.68,
+            "remainder": 576.32,
+            "status": "✓ Осталось"
         },
         {
             "name": "Хоз товары",
             "allocated": 50.0,
             "spent": 2.75,
             "remainder": 47.25,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Транспорт",
             "allocated": 100.0,
-            "spent": 9.4,
-            "remainder": 90.6,
-            "status": ""
+            "spent": 0.0,
+            "remainder": 100.0,
+            "status": "✓ Осталось"
         },
         {
             "name": "Билеты на поезд",
             "allocated": 111.68,
             "spent": 111.68,
             "remainder": 0.0,
-            "status": ""
+            "status": "В ноль"
         },
         {
             "name": "Здоровье",
             "allocated": 0.0,
-            "spent": 75.52,
-            "remainder": -75.52,
-            "status": ""
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
         },
         {
             "name": "Аптека",
             "allocated": 20.0,
             "spent": 0.0,
             "remainder": 20.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Спорт",
             "allocated": 0.0,
             "spent": 0.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "—"
         },
         {
             "name": "Спортзал",
             "allocated": 0.0,
             "spent": 0.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "—"
         },
         {
             "name": "Золотое Яблоко",
             "allocated": 50.0,
             "spent": 0.0,
             "remainder": 50.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Уход за женой",
             "allocated": 50.0,
             "spent": 0.0,
             "remainder": 50.0,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Одежда/Обувь",
             "allocated": 0.0,
             "spent": 0.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "—"
         },
         {
             "name": "Вайлдберриз",
             "allocated": 0.0,
             "spent": 82.5,
             "remainder": -82.5,
-            "status": ""
+            "status": "⚠ В минус!"
         },
         {
             "name": "Озон",
             "allocated": 120.0,
             "spent": 18.99,
             "remainder": 101.01,
-            "status": ""
+            "status": "✓ Осталось"
         },
         {
             "name": "Шопинг",
             "allocated": 0.0,
             "spent": 0.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "—"
         },
         {
             "name": "Развлечения",
             "allocated": 0.0,
             "spent": 8.9,
             "remainder": -8.9,
-            "status": ""
+            "status": "⚠ В минус!"
         },
         {
             "name": "Отложить (накопления)",
             "allocated": 0.0,
             "spent": 0.0,
             "remainder": 0.0,
-            "status": ""
+            "status": "—"
         },
         {
             "name": "Непредвиденные расходы",
             "allocated": 100.0,
-            "spent": 11.3,
-            "remainder": 88.7,
-            "status": ""
+            "spent": 0.0,
+            "remainder": 100.0,
+            "status": "✓ Осталось"
         }
     ]
 };
@@ -918,34 +917,96 @@
             });
         }
 
+        const SHEET_ID = '1SG2NV0bmI_4is4bvOQN2Y8mKoEv7s-j2g0OoplPt_mM';
+
+        async function fetchSheetData(monthName = 'Октябрь') {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(monthName)}&t=${Date.now()}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+            const text = await res.text();
+            const jsonStr = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+            const data = JSON.parse(jsonStr);
+            const rows = data.table.rows;
+
+            const getNum = (cell) => {
+                if (!cell || cell.v === null || cell.v === undefined) return 0.0;
+                const n = parseFloat(cell.v);
+                return isNaN(n) ? 0.0 : Math.round(n * 100) / 100;
+            };
+            const getStr = (cell) => (!cell || cell.v === null || cell.v === undefined) ? '' : String(cell.v).trim();
+
+            const incomes = [];
+            let totalIncomeCalc = 0;
+            for (let i = 0; i < 4; i++) {
+                if (rows[i]) {
+                    const c = rows[i].c;
+                    const name = getStr(c[1]);
+                    const amt = getNum(c[2]);
+                    totalIncomeCalc += amt;
+                    incomes.push({ name, amount: amt });
+                }
+            }
+            const totalIncome = (rows[4] && getNum(rows[4].c[2])) || totalIncomeCalc;
+
+            const categories = [];
+            let allocatedTotalCalc = 0;
+            let spentTotalCalc = 0;
+
+            for (let i = 7; i <= 28; i++) {
+                if (!rows[i]) continue;
+                const c = rows[i].c;
+                const catName = getStr(c[1]);
+                if (!catName) continue;
+                const alloc = getNum(c[2]);
+                const spent = getNum(c[3]);
+                const rem = getNum(c[4]);
+                const status = c.length > 5 ? getStr(c[5]) : '';
+                allocatedTotalCalc += alloc;
+                spentTotalCalc += spent;
+                categories.push({ name: catName, allocated: alloc, spent, remainder: rem, status });
+            }
+
+            const row29 = rows[29] ? rows[29].c : [];
+            const allocatedTotal = getNum(row29[2]) || Math.round(allocatedTotalCalc * 100) / 100;
+            const spentTotal = getNum(row29[3]) || Math.round(spentTotalCalc * 100) / 100;
+            const budgetRemainder = getNum(row29[4]) || Math.round((allocatedTotal - spentTotal) * 100) / 100;
+            const realRemainder = Math.round((totalIncome - spentTotal) * 100) / 100;
+
+            return {
+                total_income: totalIncome,
+                allocated_total: allocatedTotal,
+                total_spent: spentTotal,
+                budget_remainder: budgetRemainder,
+                real_remainder: realRemainder,
+                incomes,
+                categories
+            };
+        }
+
         async function syncData(manual = false) {
             const btn = document.querySelector('.sync-btn');
             if (btn) {
                 btn.style.opacity = '0.6';
-                btn.innerText = 'Обновление...';
+                btn.innerText = 'Обновление из Google Таблиц...';
             }
             if (tg && tg.HapticFeedback && manual) {
                 tg.HapticFeedback.impactOccurred('medium');
             }
             try {
-                const cacheBuster = Date.now();
-                const res = await fetch(`https://raw.githubusercontent.com/ReyPris/family-budget-miniapp/main/data.json?t=${cacheBuster}`);
-                if (res.ok) {
-                    const liveData = await res.json();
-                    if (liveData && liveData.categories) {
-                        currentData = liveData;
-                        renderView();
-                        if (tg && tg.HapticFeedback && manual) {
-                            tg.HapticFeedback.notificationOccurred('success');
-                        }
+                const liveData = await fetchSheetData('Октябрь');
+                if (liveData && liveData.categories && liveData.categories.length > 0) {
+                    currentData = liveData;
+                    renderView();
+                    if (tg && tg.HapticFeedback && manual) {
+                        tg.HapticFeedback.notificationOccurred('success');
                     }
                 }
             } catch (e) {
-                console.log("Using cached data, fetch error:", e);
+                console.log("Error fetching from Google Sheets, using fallback:", e);
             } finally {
                 if (btn) {
                     btn.style.opacity = '1';
-                    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Обновить из Excel`;
+                    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Обновить из Google Таблиц`;
                 }
             }
         }
