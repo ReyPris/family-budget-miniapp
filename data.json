@@ -1,0 +1,161 @@
+{
+  "month": "Октябрь 2026",
+  "total_income": 860.0,
+  "allocated_total": 1989.68,
+  "total_spent": 1017.62,
+  "budget_remainder": 972.06,
+  "real_remainder": -157.62,
+  "incomes": [
+    {
+      "name": "ЗП муж",
+      "amount": 210.0
+    },
+    {
+      "name": "Родители Муж",
+      "amount": 600.0
+    },
+    {
+      "name": "Родители Жена",
+      "amount": 50.0
+    },
+    {
+      "name": "Прочие доходы",
+      "amount": 0.0
+    }
+  ],
+  "categories": [
+    {
+      "name": "Аренда квартиры",
+      "allocated": 600.0,
+      "spent": 600.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Комуналка",
+      "allocated": 120.0,
+      "spent": 0.0,
+      "remainder": 120.0
+    },
+    {
+      "name": "Интернет",
+      "allocated": 28.0,
+      "spent": 0.0,
+      "remainder": 28.0
+    },
+    {
+      "name": "Телефон",
+      "allocated": 31.0,
+      "spent": 10.0,
+      "remainder": 21.0
+    },
+    {
+      "name": "Спотифай",
+      "allocated": 9.0,
+      "spent": 0.0,
+      "remainder": 9.0
+    },
+    {
+      "name": "Продукты",
+      "allocated": 600.0,
+      "spent": 75.28,
+      "remainder": 524.72
+    },
+    {
+      "name": "Хоз товары",
+      "allocated": 50.0,
+      "spent": 2.75,
+      "remainder": 47.25
+    },
+    {
+      "name": "Транспорт",
+      "allocated": 100.0,
+      "spent": 20.7,
+      "remainder": 79.3
+    },
+    {
+      "name": "Билеты на поезд",
+      "allocated": 111.68,
+      "spent": 111.68,
+      "remainder": 0.0
+    },
+    {
+      "name": "Здоровье",
+      "allocated": 0.0,
+      "spent": 75.52,
+      "remainder": -75.52
+    },
+    {
+      "name": "Аптека",
+      "allocated": 20.0,
+      "spent": 0.0,
+      "remainder": 20.0
+    },
+    {
+      "name": "Спорт",
+      "allocated": 0.0,
+      "spent": 0.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Спортзал",
+      "allocated": 0.0,
+      "spent": 0.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Золотое Яблоко",
+      "allocated": 50.0,
+      "spent": 0.0,
+      "remainder": 50.0
+    },
+    {
+      "name": "Уход за женой",
+      "allocated": 50.0,
+      "spent": 0.0,
+      "remainder": 50.0
+    },
+    {
+      "name": "Одежда/Обувь",
+      "allocated": 0.0,
+      "spent": 0.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Вайлдберриз",
+      "allocated": 0.0,
+      "spent": 82.5,
+      "remainder": -82.5
+    },
+    {
+      "name": "Озон",
+      "allocated": 120.0,
+      "spent": 18.99,
+      "remainder": 101.01
+    },
+    {
+      "name": "Шопинг",
+      "allocated": 0.0,
+      "spent": 0.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Развлечения",
+      "allocated": 0.0,
+      "spent": 8.9,
+      "remainder": -8.9
+    },
+    {
+      "name": "Отложить (накопления)",
+      "allocated": 0.0,
+      "spent": 0.0,
+      "remainder": 0.0
+    },
+    {
+      "name": "Непредвиденные расходы",
+      "allocated": 100.0,
+      "spent": 11.3,
+      "remainder": 88.7
+    }
+  ],
+  "updated_at": "2026-10-05 21:00:00"
+}
