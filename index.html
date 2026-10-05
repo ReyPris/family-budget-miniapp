@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EVOLUD Budget • Семейный Бюджет 2026</title>
+    <title>Семейный Бюджет • Октябрь 2026</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #060513;
             --card-bg: linear-gradient(180deg, rgba(30, 16, 58, 0.88) 0%, rgba(10, 12, 32, 0.96) 100%);
-            --card-border: rgba(168, 85, 247, 0.26);
-            --subcard-bg: rgba(20, 10, 42, 0.72);
-            --subcard-border: rgba(168, 85, 247, 0.2);
+            --card-border: rgba(168, 85, 247, 0.25);
+            --subcard-bg: rgba(20, 10, 42, 0.7);
+            --subcard-border: rgba(168, 85, 247, 0.18);
             --text-main: #ffffff;
             --text-muted: #cbd5e1;
             --purple: #c084fc;
@@ -39,7 +39,7 @@
             background-image: radial-gradient(circle at 50% 0%, #2e1065 0%, #0e0d29 55%, #050414 100%);
             background-attachment: fixed;
             color: var(--text-main);
-            padding: 12px 14px 40px 14px;
+            padding: 12px 14px 100px 14px;
             min-height: 100vh;
         }
 
@@ -47,75 +47,54 @@
             font-family: 'Unbounded', sans-serif !important;
         }
 
-        /* EVOLUD Glass Card */
+        /* Glass Cards */
         .evo-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(124, 58, 237, 0.22);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            padding: 16px;
+            border-radius: 24px;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(124, 58, 237, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 18px;
             margin-bottom: 14px;
         }
 
         .evo-subcard {
             background: var(--subcard-bg);
             border: 1px solid var(--subcard-border);
-            border-radius: 14px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 14px;
         }
 
-        /* Header Bar */
+        /* Clean Header Bar (NO tacky fake logo/branding) */
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             padding: 4px 2px;
         }
 
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .header-title {
             font-family: 'Unbounded', sans-serif;
-            font-weight: 900;
-            font-size: 14px;
-            color: #ffffff;
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.55);
-        }
-
-        .brand-title {
-            font-family: 'Unbounded', sans-serif;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 800;
-            letter-spacing: 0.5px;
             color: #ffffff;
-            line-height: 1.2;
+            letter-spacing: -0.3px;
         }
 
-        .brand-sub {
-            font-size: 10px;
+        .header-sub {
+            font-size: 11px;
             color: var(--purple);
             font-weight: 600;
+            margin-top: 2px;
         }
 
         .user-badge {
-            background: rgba(76, 29, 149, 0.4);
-            border: 1px solid rgba(168, 85, 247, 0.35);
+            background: rgba(76, 29, 149, 0.35);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 20px;
-            padding: 4px 10px;
+            padding: 5px 12px;
             font-size: 11px;
             font-weight: 700;
             color: #ffffff;
@@ -132,7 +111,7 @@
             box-shadow: 0 0 8px #22c55e;
         }
 
-        /* Main Net Balance Display */
+        /* Main Balance Card */
         .balance-label {
             font-size: 11px;
             text-transform: uppercase;
@@ -144,12 +123,12 @@
 
         .balance-value {
             font-family: 'Unbounded', sans-serif;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
             background: linear-gradient(135deg, #ffffff 0%, #e9d5ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         /* KPI 4 Grid */
@@ -162,14 +141,9 @@
 
         .kpi-card {
             background: rgba(20, 10, 42, 0.75);
-            border: 1px solid rgba(168, 85, 247, 0.22);
-            border-radius: 14px;
-            padding: 10px 12px;
-            transition: all 0.2s ease;
-        }
-
-        .kpi-card:active {
-            transform: scale(0.98);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 12px 14px;
         }
 
         .kpi-title {
@@ -183,52 +157,48 @@
 
         .kpi-val {
             font-family: 'Unbounded', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
+            white-space: nowrap;
         }
 
         .kpi-val.green { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
         .kpi-val.purple { color: #c084fc; text-shadow: 0 0 10px rgba(192, 132, 252, 0.4); }
         .kpi-val.red { color: #f87171; text-shadow: 0 0 10px rgba(248, 113, 113, 0.3); }
-        .kpi-val.gold { color: #facc15; text-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
+        .kpi-val.gold { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
 
-        /* Month Selector Bar */
-        .month-bar {
+        /* Filter Tabs */
+        .tab-bar {
             display: flex;
-            overflow-x: auto;
             gap: 8px;
-            padding-bottom: 6px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            overflow-x: auto;
             scrollbar-width: none;
-            -ms-overflow-style: none;
         }
+        .tab-bar::-webkit-scrollbar { display: none; }
 
-        .month-bar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .month-pill {
+        .tab-btn {
             background: rgba(24, 12, 52, 0.65);
             border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 20px;
-            padding: 6px 14px;
+            padding: 7px 14px;
             font-size: 11px;
             font-weight: 700;
             color: var(--text-muted);
             white-space: nowrap;
-            transition: all 0.2s ease;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .month-pill.active {
+        .tab-btn.active {
             background: linear-gradient(135deg, #7c3aed 0%, #4338ca 100%);
             border-color: #c084fc;
             color: #ffffff;
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.45);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
             font-weight: 800;
         }
 
-        /* Search & Filter Bar */
+        /* Search Input */
         .search-box {
             position: relative;
             margin-bottom: 14px;
@@ -237,9 +207,9 @@
         .search-input {
             width: 100%;
             background: rgba(14, 8, 30, 0.85);
-            border: 1px solid rgba(168, 85, 247, 0.26);
-            border-radius: 12px;
-            padding: 10px 12px 10px 36px;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 14px;
+            padding: 11px 14px 11px 38px;
             color: #ffffff;
             font-size: 12px;
             outline: none;
@@ -253,7 +223,7 @@
 
         .search-icon {
             position: absolute;
-            left: 12px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             width: 14px;
@@ -263,7 +233,7 @@
             stroke-width: 2;
         }
 
-        /* Category Item Card */
+        /* Category Cards */
         .cat-list {
             display: flex;
             flex-direction: column;
@@ -272,9 +242,9 @@
 
         .cat-card {
             background: rgba(20, 10, 42, 0.75);
-            border: 1px solid rgba(168, 85, 247, 0.22);
-            border-radius: 16px;
-            padding: 12px 14px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 18px;
+            padding: 13px 15px;
             transition: all 0.2s ease;
         }
 
@@ -296,11 +266,11 @@
         }
 
         .cat-icon-box {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             background: rgba(76, 29, 149, 0.4);
-            border: 1px solid rgba(168, 85, 247, 0.26);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -315,8 +285,9 @@
         }
 
         .cat-sub {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-muted);
+            margin-top: 1px;
         }
 
         .cat-amounts {
@@ -333,6 +304,7 @@
         .cat-allocated {
             font-size: 10px;
             color: var(--text-muted);
+            margin-top: 1px;
         }
 
         /* Progress Bar */
@@ -342,8 +314,7 @@
             background: rgba(14, 8, 30, 0.95);
             border-radius: 10px;
             overflow: hidden;
-            margin: 6px 0 8px 0;
-            position: relative;
+            margin: 8px 0;
         }
 
         .progress-fill {
@@ -376,8 +347,8 @@
         }
 
         .pct-badge {
-            padding: 2px 6px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 8px;
             font-weight: 700;
             font-size: 10px;
         }
@@ -390,11 +361,99 @@
             color: var(--text-muted);
         }
 
-        .rem-text span {
-            font-weight: 700;
+        /* How It Works Guide Expandable */
+        .guide-box {
+            background: rgba(20, 10, 42, 0.7);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+        
+        .guide-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
         }
 
-        /* Floating Sync / Refresh Button */
+        .guide-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guide-content {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(168, 85, 247, 0.15);
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .guide-content.open {
+            display: block;
+        }
+
+        .guide-item {
+            margin-bottom: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .guide-item b {
+            color: #ffffff;
+        }
+
+        /* Authentic Evolud Floating Bottom Navigation Bar */
+        .evolud-bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 12px;
+            background: radial-gradient(farthest-side at bottom, rgba(76, 29, 149, 0.9), rgba(12, 14, 38, 0.95));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 30px;
+            position: fixed;
+            bottom: 16px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(124, 58, 237, 0.25);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+        }
+
+        .nav-item.active svg {
+            stroke: var(--purple);
+            filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.6));
+        }
+
         .sync-btn {
             background: linear-gradient(135deg, #7c3aed 0%, #4338ca 100%);
             color: #ffffff;
@@ -414,25 +473,16 @@
             box-shadow: 0 0 20px rgba(124, 58, 237, 0.45);
             cursor: pointer;
             margin-top: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .sync-btn:active {
-            transform: scale(0.98);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.65);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Clean Header Bar -->
     <div class="header">
-        <div class="brand-logo">
-            <div class="logo-icon">EVO</div>
-            <div>
-                <div class="brand-title">EVOLUD BUDGET</div>
-                <div class="brand-sub">Семейный Бюджет 2026</div>
-            </div>
+        <div>
+            <div class="header-title">СЕМЕЙНЫЙ БЮДЖЕТ</div>
+            <div class="header-sub">Октябрь 2026</div>
         </div>
         <div class="user-badge" id="user-badge">
             <div class="status-dot"></div>
@@ -443,57 +493,86 @@
     <!-- Main Balance Card -->
     <div class="evo-card">
         <div class="balance-label">Свободный Остаток на руках</div>
-        <div class="balance-value" id="kpi-rem-hand">0 ₽</div>
+        <div class="balance-value" id="kpi-rem-hand">0,00 ₽</div>
 
         <!-- 4 KPI Grid -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-title">Доход</div>
-                <div class="kpi-val green" id="kpi-income">0 ₽</div>
+                <div class="kpi-title">Общий Доход</div>
+                <div class="kpi-val green" id="kpi-income">0,00 ₽</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">Выделено</div>
-                <div class="kpi-val purple" id="kpi-allocated">0 ₽</div>
+                <div class="kpi-title">Выделено (План)</div>
+                <div class="kpi-val purple" id="kpi-allocated">0,00 ₽</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">Потрачено</div>
-                <div class="kpi-val red" id="kpi-spent">0 ₽</div>
+                <div class="kpi-title">Всего Потрачено</div>
+                <div class="kpi-val red" id="kpi-spent">0,00 ₽</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">Остаток в Бюджете</div>
-                <div class="kpi-val gold" id="kpi-rem-budget">0 ₽</div>
+                <div class="kpi-val gold" id="kpi-rem-budget">0,00 ₽</div>
             </div>
         </div>
+    </div>
 
-        <!-- Month Bar -->
-        <div class="month-bar" id="months-bar"></div>
+    <!-- How It Works Expandable Guide -->
+    <div class="guide-box">
+        <div class="guide-header" onclick="toggleGuide()">
+            <div class="guide-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Как здесь всё устроено и считается
+            </div>
+            <svg id="guide-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="guide-content" id="guide-content">
+            <div class="guide-item">💳 <div><b>Свободный Остаток на руках:</b> Реальные живые деньги (<code>Доход − Потрачено</code>).</div></div>
+            <div class="guide-item">🟢 <div><b>Общий Доход:</b> Все приходы за месяц (ЗП, помощь родителей).</div></div>
+            <div class="guide-item">🟣 <div><b>Выделено (План):</b> Запланированные лимиты по всем 22 категориям.</div></div>
+            <div class="guide-item">🔴 <div><b>Всего Потрачено:</b> Фактические расходы с копейками.</div></div>
+            <div class="guide-item">🟡 <div><b>Остаток в Бюджете:</b> Неизрасходованная часть плановых лимитов (<code>Выделено − Потрачено</code>).</div></div>
+        </div>
     </div>
 
     <!-- Categories Section -->
     <div class="evo-card">
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-            <div style="font-family:'Unbounded',sans-serif; font-size:12px; font-weight:800; color:#fff;">
-                КАТЕГОРИИ РАСХОДОВ
-            </div>
-            <div style="font-size:10px; color:var(--purple); font-weight:700;" id="cat-count-badge">
-                0 категорий
-            </div>
+        <div class="tab-bar">
+            <div class="tab-btn active" onclick="setTab('all', this)">Все категории</div>
+            <div class="tab-btn" onclick="setTab('active', this)">С расходами</div>
+            <div class="tab-btn" onclick="setTab('over', this)">Перерасход ⚠</div>
+            <div class="tab-btn" onclick="setTab('income', this)">Доходы 💳</div>
         </div>
 
         <!-- Search Bar -->
         <div class="search-box">
             <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="search-input" class="search-input" placeholder="Поиск категории (Продукты, Озон, WB...)..." oninput="filterCategories()">
+            <input type="text" id="search-input" class="search-input" placeholder="Поиск категории (Продукты, Озон, WB...)..." oninput="renderView()">
         </div>
 
         <!-- Category List -->
         <div class="cat-list" id="cat-list"></div>
 
-        <!-- Refresh Sync Button -->
-        <button class="sync-btn" onclick="loadData(true)">
+        <!-- Sync Button -->
+        <button class="sync-btn" onclick="syncData(true)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-            Обновить данные из Excel
+            Обновить из Excel
         </button>
+    </div>
+
+    <!-- Floating Bottom Navigation -->
+    <div class="evolud-bottom-nav">
+        <div class="nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Обзор</span>
+        </div>
+        <div class="nav-item" onclick="document.querySelector('.search-input').focus()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Поиск</span>
+        </div>
+        <div class="nav-item" onclick="toggleGuide()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>Инфо</span>
+        </div>
     </div>
 
     <script>
@@ -507,14 +586,198 @@
             }
         }
 
+        // Pre-baked October Data directly from C:\Users\REY\Desktop\Семейный_бюджет_2026.xlsx
+        const OCTOBER_DATA = {
+    "month": "Октябрь 2026",
+    "total_income": 860.0,
+    "total_spent": 858.5,
+    "real_remainder": 1.5,
+    "allocated_total": 1989.68,
+    "budget_remainder": 1131.18,
+    "incomes": [
+        {
+            "name": "ЗП муж",
+            "amount": 210.0
+        },
+        {
+            "name": "Родители Муж",
+            "amount": 600.0
+        },
+        {
+            "name": "Родители Жена",
+            "amount": 50.0
+        },
+        {
+            "name": "Прочие доходы",
+            "amount": 0.0
+        }
+    ],
+    "categories": [
+        {
+            "name": "Аренда квартиры",
+            "allocated": 600.0,
+            "spent": 600.0,
+            "remainder": 0.0,
+            "status": "В ноль"
+        },
+        {
+            "name": "Комуналка",
+            "allocated": 120.0,
+            "spent": 0.0,
+            "remainder": 120.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Интернет",
+            "allocated": 28.0,
+            "spent": 0.0,
+            "remainder": 28.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Телефон",
+            "allocated": 31.0,
+            "spent": 10.0,
+            "remainder": 21.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Спотифай",
+            "allocated": 9.0,
+            "spent": 0.0,
+            "remainder": 9.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Продукты",
+            "allocated": 600.0,
+            "spent": 23.68,
+            "remainder": 576.32,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Хоз товары",
+            "allocated": 50.0,
+            "spent": 2.75,
+            "remainder": 47.25,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Транспорт",
+            "allocated": 100.0,
+            "spent": 0.0,
+            "remainder": 100.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Билеты на поезд",
+            "allocated": 111.68,
+            "spent": 111.68,
+            "remainder": 0.0,
+            "status": "В ноль"
+        },
+        {
+            "name": "Здоровье",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Аптека",
+            "allocated": 20.0,
+            "spent": 0.0,
+            "remainder": 20.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Спорт",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Спортзал",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Золотое Яблоко",
+            "allocated": 50.0,
+            "spent": 0.0,
+            "remainder": 50.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Уход за женой",
+            "allocated": 50.0,
+            "spent": 0.0,
+            "remainder": 50.0,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Одежда/Обувь",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Вайлдберриз",
+            "allocated": 0.0,
+            "spent": 82.5,
+            "remainder": -82.5,
+            "status": "⚠ В минус!"
+        },
+        {
+            "name": "Озон",
+            "allocated": 120.0,
+            "spent": 18.99,
+            "remainder": 101.01,
+            "status": "✓ Осталось"
+        },
+        {
+            "name": "Шопинг",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Развлечения",
+            "allocated": 0.0,
+            "spent": 8.9,
+            "remainder": -8.9,
+            "status": "⚠ В минус!"
+        },
+        {
+            "name": "Отложить (накопления)",
+            "allocated": 0.0,
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
+        },
+        {
+            "name": "Непредвиденные расходы",
+            "allocated": 100.0,
+            "spent": 0.0,
+            "remainder": 100.0,
+            "status": "✓ Осталось"
+        }
+    ]
+};
+
         const CATEGORY_SVGS = {
             "ЗП муж": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
-            "Родители Муж": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#818cf8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+            "Родители Муж": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
             "Родители Жена": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f472b6" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
             "Прочие доходы": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4ade80" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',
             "Аренда квартиры": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
             "Комуналка": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#eab308" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-            "Интернет": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+            "Интернет": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
             "Телефон": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#818cf8" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
             "Спотифай": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
             "Продукты": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
@@ -536,77 +799,87 @@
             "Непредвиденные расходы": '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
         };
 
-        const MONTHS = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-        const currentMonthIdx = new Date().getMonth();
-        let activeMonth = MONTHS[currentMonthIdx] || "Октябрь";
-        let budgetData = {};
+        let activeTab = 'all';
+        let currentData = OCTOBER_DATA;
 
-        function fmt(num) {
-            return Math.round(num || 0).toLocaleString('ru-RU') + ' ₽';
+        // Strict Kopecks formatting (always 2 decimals: e.g. 1 131,18 ₽)
+        function fmt(val) {
+            const num = floatVal(val);
+            return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
         }
 
-        async function loadData(manual = false) {
-            if (tg && tg.HapticFeedback && manual) {
-                tg.HapticFeedback.impactOccurred('light');
-            }
-            try {
-                const res = await fetch('/api/budget');
-                budgetData = await res.json();
-                renderMonths();
-                renderView();
-            } catch (e) {
-                console.error("Fetch error:", e);
-            }
+        function floatVal(val) {
+            const f = parseFloat(val);
+            return isNaN(f) ? 0.0 : f;
         }
 
-        function renderMonths() {
-            const container = document.getElementById('months-bar');
-            container.innerHTML = '';
-            MONTHS.forEach(m => {
-                const btn = document.createElement('div');
-                btn.className = 'month-pill' + (m === activeMonth ? ' active' : '');
-                btn.innerText = m;
-                btn.onclick = () => {
-                    activeMonth = m;
-                    if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
-                    renderMonths();
-                    renderView();
-                };
-                container.appendChild(btn);
-            });
+        function toggleGuide() {
+            const el = document.getElementById('guide-content');
+            el.classList.toggle('open');
+        }
+
+        function setTab(tab, btn) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderView();
         }
 
         function renderView() {
-            const data = budgetData[activeMonth] || { income:0, allocated:0, spent:0, remainder_budget:0, remainder_hand:0, categories:[] };
+            document.getElementById('kpi-income').innerText = fmt(currentData.total_income);
+            document.getElementById('kpi-allocated').innerText = fmt(currentData.allocated_total);
+            document.getElementById('kpi-spent').innerText = fmt(currentData.total_spent);
+            document.getElementById('kpi-rem-budget').innerText = fmt(currentData.budget_remainder);
+            document.getElementById('kpi-rem-hand').innerText = fmt(currentData.real_remainder);
 
-            document.getElementById('kpi-income').innerText = fmt(data.income);
-            document.getElementById('kpi-allocated').innerText = fmt(data.allocated);
-            document.getElementById('kpi-spent').innerText = fmt(data.spent);
-            document.getElementById('kpi-rem-budget').innerText = fmt(data.remainder_budget);
-            document.getElementById('kpi-rem-hand').innerText = fmt(data.remainder_hand);
-
-            filterCategories();
-        }
-
-        function filterCategories() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
-            const data = budgetData[activeMonth] || { categories: [] };
             const container = document.getElementById('cat-list');
             container.innerHTML = '';
 
-            const list = data.categories.filter(c => c.name.toLowerCase().includes(query));
-            document.getElementById('cat-count-badge').innerText = `${list.length} категорий`;
+            if (activeTab === 'income') {
+                // Render Income Sources Tab
+                currentData.incomes.forEach(inc => {
+                    if (query && !inc.name.toLowerCase().includes(query)) return;
+                    const card = document.createElement('div');
+                    card.className = 'cat-card';
+                    card.innerHTML = `
+                        <div class="cat-header">
+                            <div class="cat-title-group">
+                                <div class="cat-icon-box">${CATEGORY_SVGS[inc.name] || CATEGORY_SVGS['ЗП муж']}</div>
+                                <div>
+                                    <div class="cat-name">${inc.name}</div>
+                                    <div class="cat-sub">Источник дохода</div>
+                                </div>
+                            </div>
+                            <div class="cat-amounts">
+                                <div class="cat-spent" style="color:#4ade80;">+${fmt(inc.amount)}</div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                return;
+            }
+
+            // Filter Expenses Categories
+            let list = currentData.categories.filter(c => c.name.toLowerCase().includes(query));
+
+            if (activeTab === 'active') {
+                list = list.filter(c => floatVal(c.spent) > 0 || floatVal(c.allocated) > 0);
+            } else if (activeTab === 'over') {
+                list = list.filter(c => floatVal(c.remainder) < 0 || c.status.includes('минус'));
+            }
 
             if (list.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:12px;">Категории не найдены</div>';
+                container.innerHTML = '<div style="text-align:center; padding:24px; color:var(--text-muted); font-size:12px;">Категории не найдены</div>';
                 return;
             }
 
             list.forEach(c => {
                 const svgIcon = CATEGORY_SVGS[c.name] || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>';
-                const allocated = c.allocated || 0;
-                const spent = c.spent || 0;
-                const remainder = c.remainder;
+                const allocated = floatVal(c.allocated);
+                const spent = floatVal(c.spent);
+                const remainder = floatVal(c.remainder);
 
                 let pct = allocated > 0 ? Math.round((spent / allocated) * 100) : (spent > 0 ? 100 : 0);
                 pct = Math.min(pct, 100);
@@ -645,7 +918,34 @@
             });
         }
 
-        loadData();
+        async function syncData(manual = false) {
+            if (tg && tg.HapticFeedback && manual) {
+                tg.HapticFeedback.impactOccurred('medium');
+            }
+            try {
+                const res = await fetch('/api/budget');
+                if (res.ok) {
+                    const d = await res.json();
+                    if (d['Октябрь']) {
+                        const oct = d['Октябрь'];
+                        currentData = {
+                            total_income: oct.income,
+                            allocated_total: oct.allocated,
+                            total_spent: oct.spent,
+                            budget_remainder: oct.remainder_budget,
+                            real_remainder: oct.remainder_hand,
+                            incomes: currentData.incomes,
+                            categories: oct.categories
+                        };
+                    }
+                }
+            } catch (e) {
+                console.log("Offline mode - using embedded October Excel data");
+            }
+            renderView();
+        }
+
+        renderView();
     </script>
 </body>
 </html>
