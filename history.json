@@ -53,11 +53,11 @@
     "id": "tx_6",
     "date_str": "05 окт, 18:00",
     "month": "Октябрь",
-    "category": "Телефон",
+    "category": "Продукты",
     "amount": 10.0,
     "is_income": false,
     "status": "active",
-    "raw": "телефон 10"
+    "raw": "продукты 10"
   },
   {
     "id": "tx_7",
