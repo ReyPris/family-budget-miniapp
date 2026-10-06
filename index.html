@@ -1149,6 +1149,111 @@
 
         
         // Screen Navigation
+        
+        // QR Scanner Logic
+        function openQrScanner() {
+            if (tg && tg.showScanQrPopup) {
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+                tg.showScanQrPopup({ text: "Наведите камеру на QR-код на чеке" }, function(text) {
+                    handleScannedQr(text);
+                    return true; // close native popup
+                });
+            } else {
+                // Fallback prompt for testing outside mobile Telegram
+                const manual = prompt("Введите текст или ссылку из QR-кода чека:");
+                if (manual) handleScannedQr(manual);
+            }
+        }
+
+        function handleScannedQr(text) {
+            if (!text) return;
+            if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+
+            let amount = 0.0;
+            let detectedCat = "Продукты";
+
+            // Parse fiscal QR params (e.g. t=20261006...&s=142.50&fn=...)
+            const sMatch = text.match(/[?&]s=([0-9.]+)/i);
+            if (sMatch) {
+                amount = parseFloat(sMatch[1]);
+            } else {
+                // Search for any decimal number
+                const numMatch = text.match(/([0-9]+[.,][0-9]{2})/);
+                if (numMatch) {
+                    amount = parseFloat(numMatch[1].replace(',', '.'));
+                }
+            }
+
+            // Keyword detection in QR string/URL
+            const low = text.toLowerCase();
+            if (low.includes('taxi') || low.includes('yandex.go')) detectedCat = 'Транспорт';
+            else if (low.includes('apteka') || low.includes('pharma')) detectedCat = 'Аптека';
+            else if (low.includes('fixprice')) detectedCat = 'Хоз товары';
+            else if (low.includes('wb') || low.includes('wildberries')) detectedCat = 'Вайлдберриз';
+            else if (low.includes('ozon')) detectedCat = 'Озон';
+
+            document.getElementById('receipt-raw-text').innerText = text.length > 50 ? text.substring(0, 47) + '...' : text;
+            document.getElementById('receipt-amount-input').value = amount > 0 ? amount.toFixed(2) : '';
+            document.getElementById('receipt-category-select').value = detectedCat;
+
+            const modal = document.getElementById('receipt-modal');
+            modal.style.display = 'flex';
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').style.display = 'none';
+        }
+
+        async function saveScannedReceipt() {
+            const amtVal = parseFloat(document.getElementById('receipt-amount-input').value);
+            const cat = document.getElementById('receipt-category-select').value;
+
+            if (isNaN(amtVal) || amtVal <= 0) {
+                alert("Укажите корректную сумму расхода!");
+                return;
+            }
+
+            closeReceiptModal();
+            showToast("Сохранение расхода в таблицу...");
+
+            if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+
+            const item = {
+                id: 't_' + Date.now(),
+                timestamp: new Date().toISOString(),
+                category: cat,
+                amount: Math.round(amtVal * 100) / 100,
+                is_income: false,
+                username: (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.first_name) || "ReyPris",
+                cancelled: false
+            };
+
+            // Save locally
+            const list = getStoredHistory();
+            list.unshift(item);
+            saveStoredHistory(list);
+
+            // Call Apps Script
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    month: 'Октябрь',
+                    category: cat,
+                    amount: amtVal,
+                    is_income: false
+                })
+            }).catch(() => {});
+
+            showToast(`✅ Записано: ${cat} ${fmt(amtVal)}`);
+
+            setTimeout(() => {
+                syncData(true);
+                switchScreen('history');
+            }, 1200);
+        }
+
         function switchScreen(screenName) {
             if (tg && tg.HapticFeedback) {
                 tg.HapticFeedback.selectionChanged();
@@ -1336,12 +1441,55 @@
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span>Обзор</span>
         </button>
+        <button class="nav-item" id="nav-btn-scanner" onclick="openQrScanner()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <span>Чек QR</span>
+        </button>
         <button class="nav-item" id="nav-btn-history" onclick="switchScreen('history')">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <span>История</span>
         </button>
     </div>
     <div class="toast-msg" id="toast-msg"></div>
+
+
+    <!-- Modal Receipt Confirmation -->
+    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(4,2,15,0.85); backdrop-filter:blur(15px); z-index:3000; align-items:center; justify-content:center; padding:16px;">
+        <div class="evo-card" style="width:100%; max-width:380px; padding:20px; box-shadow:0 20px 40px rgba(0,0,0,0.8);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div class="header-title" style="font-size:16px;">Чек отсканирован 🧾</div>
+                <button onclick="closeReceiptModal()" style="background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">✕</button>
+            </div>
+            
+            <div id="receipt-info-box" style="background:var(--subcard-bg); border:1px solid var(--subcard-border); border-radius:14px; padding:12px; margin-bottom:14px; font-size:12px; color:var(--text-muted); word-break:break-all;">
+                Распознано: <span id="receipt-raw-text" style="color:#ffffff;">...</span>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px;">Сумма расхода (₽ / BYN)</label>
+                <input type="number" step="0.01" id="receipt-amount-input" style="width:100%; background:var(--subcard-bg); border:1px solid var(--subcard-border); border-radius:12px; padding:10px 14px; color:#ffffff; font-size:16px; font-weight:700; font-family:'Unbounded',sans-serif; outline:none;">
+            </div>
+
+            <div style="margin-bottom:18px;">
+                <label style="display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px;">Категория</label>
+                <select id="receipt-category-select" style="width:100%; background:var(--subcard-bg); border:1px solid var(--subcard-border); border-radius:12px; padding:10px 14px; color:#ffffff; font-size:14px; outline:none;">
+                    <option value="Продукты">🛒 Продукты</option>
+                    <option value="Хоз товары">🧼 Хоз товары</option>
+                    <option value="Транспорт">🚕 Транспорт</option>
+                    <option value="Аптека">💊 Аптека</option>
+                    <option value="Кафе">☕ Кафе / Еда вне дома</option>
+                    <option value="Вайлдберриз">📦 Вайлдберриз</option>
+                    <option value="Озон">🔵 Озон</option>
+                    <option value="Развлечения">🍿 Развлечения</option>
+                    <option value="Непредвиденные расходы">⚡ Непредвиденные расходы</option>
+                </select>
+            </div>
+
+            <button onclick="saveScannedReceipt()" style="width:100%; background:linear-gradient(135deg, #7c3aed, #c084fc); border:none; border-radius:14px; padding:12px; color:#ffffff; font-weight:700; font-size:14px; cursor:pointer; box-shadow:0 8px 20px rgba(124,58,237,0.4);">
+                ✅ Записать в Google Таблицу
+            </button>
+        </div>
+    </div>
 
 </body>
 </html>
