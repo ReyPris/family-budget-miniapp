@@ -528,15 +528,25 @@
         }
 
         /* History items */
-        .history-item {
+        .history-card-box {
             background: var(--subcard-bg);
             border: 1px solid var(--subcard-border);
             border-radius: 18px;
-            padding: 14px 16px;
             margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+        .history-card-box.has-products {
+            border-color: rgba(168, 85, 247, 0.35);
+        }
+        .history-item {
+            background: transparent;
+            border: none;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
             transition: all 0.2s;
         }
         .history-item.cancelled {
@@ -583,6 +593,54 @@
         .history-undo-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+        .history-badge-expand {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.18);
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-top: 4px;
+            transition: all 0.2s ease;
+        }
+        .history-products-list {
+            display: none;
+            padding: 12px 16px 14px 16px;
+            background: rgba(8, 4, 22, 0.55);
+            border-top: 1px dashed rgba(168, 85, 247, 0.25);
+            animation: fadeIn 0.2s ease;
+        }
+        .history-products-list.open {
+            display: block;
+        }
+        .product-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 12px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .product-item-row:last-child {
+            border-bottom: none;
+        }
+        .product-item-name {
+            color: #ffffff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .product-item-price {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            color: #f1f5f9;
+            white-space: nowrap;
         }
         .cancelled-badge {
             font-size: 11px;
@@ -1362,9 +1420,14 @@
                 const isInc = item.is_income;
                 const amtClass = isInc ? 'plus' : 'minus';
                 const sign = isInc ? '+' : '−';
-                const card = document.createElement('div');
-                card.className = 'history-item' + (item.cancelled ? ' cancelled' : '');
-                card.id = 'h-item-' + item.id;
+
+                // Check for itemized products list
+                const products = item.products || item.items || [];
+                const hasProducts = products.length > 0;
+
+                const cardBox = document.createElement('div');
+                cardBox.className = 'history-card-box' + (hasProducts ? ' has-products' : '');
+                cardBox.id = 'h-box-' + item.id;
 
                 const actionHtml = item.cancelled
                     ? '<span class="cancelled-badge">Отменено ↺</span>'
@@ -1372,21 +1435,59 @@
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38l-5.67 5.67"/></svg> Отменить ↺
                        </button>`;
 
-                card.innerHTML = `
-                    <div class="history-left">
-                        <div class="cat-icon-box" style="width: 36px; height: 36px; min-width: 36px;">${svg}</div>
-                        <div>
-                            <div style="font-size: 14px; font-weight: 600; color: #ffffff;">${item.category}</div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${timeStr} • ${item.username || 'Пользователь'}</div>
+                const expandBadge = hasProducts
+                    ? `<div class="history-badge-expand">🧾 Позиций: ${products.length} ▼</div>`
+                    : '';
+
+                let productsHtml = '';
+                if (hasProducts) {
+                    const rowsHtml = products.map(p => `
+                        <div class="product-item-row">
+                            <div class="product-item-name">
+                                <span>🛒</span>
+                                <span>${p.name || 'Товар'}</span>
+                                ${p.qty ? `<span style="font-size:10px; color:var(--text-muted);">x${p.qty}</span>` : ''}
+                            </div>
+                            <div class="product-item-price">${fmt(p.price || p.sum || 0)}</div>
+                        </div>
+                    `).join('');
+
+                    productsHtml = `
+                        <div class="history-products-list" id="prods-${item.id}">
+                            <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Состав чека:</div>
+                            ${rowsHtml}
+                        </div>
+                    `;
+                }
+
+                cardBox.innerHTML = `
+                    <div class="history-item ${item.cancelled ? 'cancelled' : ''}" onclick="toggleProducts('${item.id}', event)">
+                        <div class="history-left">
+                            <div class="cat-icon-box" style="width: 36px; height: 36px; min-width: 36px;">${svg}</div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 600; color: #ffffff;">${item.category}</div>
+                                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${timeStr} • ${item.username || 'Пользователь'}</div>
+                                ${expandBadge}
+                            </div>
+                        </div>
+                        <div class="history-right">
+                            <div class="history-amt ${amtClass}">${sign}${fmt(item.amount)}</div>
+                            ${actionHtml}
                         </div>
                     </div>
-                    <div class="history-right">
-                        <div class="history-amt ${amtClass}">${sign}${fmt(item.amount)}</div>
-                        ${actionHtml}
-                    </div>
+                    ${productsHtml}
                 `;
-                container.appendChild(card);
+                container.appendChild(cardBox);
             });
+        }
+
+        function toggleProducts(id, ev) {
+            if (ev && ev.target && ev.target.closest('.history-undo-btn')) return;
+            const el = document.getElementById('prods-' + id);
+            if (el) {
+                el.classList.toggle('open');
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+            }
         }
 
         async function undoTransaction(id, category, amount, isIncome) {
