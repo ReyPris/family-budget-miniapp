@@ -1422,19 +1422,20 @@
             }
 
             try {
-                // Try to fetch latest data.json from GitHub
+                // Fetch latest data.json from GitHub with cache-busting
                 const res = await fetch(`https://raw.githubusercontent.com/ReyPris/family-budget-miniapp/main/data.json?t=${Date.now()}`);
                 if (res.ok) {
                     const d = await res.json();
                     if (d && Array.isArray(d.recent_transactions)) {
-                        const local = getStoredHistory();
-                        const localMap = {};
-                        local.forEach(x => { localMap[x.id] = x.cancelled; });
-
-                        historyTransactions = d.recent_transactions.map(item => ({
-                            ...item,
-                            cancelled: item.status === 'undone' || (localMap[item.id] !== undefined ? localMap[item.id] : (item.cancelled || false))
-                        }));
+                        historyTransactions = d.recent_transactions.map((item, idx) => {
+                            const uniqueId = item.id || `t_item_${idx}`;
+                            const isUndone = (item.status === 'undone' || item.cancelled === true);
+                            return {
+                                ...item,
+                                id: uniqueId,
+                                cancelled: isUndone
+                            };
+                        });
                         saveStoredHistory(historyTransactions);
                     }
                 }
