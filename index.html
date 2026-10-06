@@ -1460,7 +1460,11 @@
             }
 
             container.innerHTML = '';
-            const displayList = [...list].reverse();
+            const displayList = [...list].sort((a, b) => {
+                const ta = new Date(a.timestamp || 0).getTime() || 0;
+                const tb = new Date(b.timestamp || 0).getTime() || 0;
+                return tb - ta;
+            });
             displayList.forEach(item => {
                 const dateObj = new Date(item.timestamp);
                 const timeStr = !isNaN(dateObj.getTime())
