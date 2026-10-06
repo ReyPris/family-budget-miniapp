@@ -1,225 +1,118 @@
 {
-  "month": "Октябрь 2026",
-  "income": 860.0,
-  "allocated": 1989.68,
-  "spent": 858.4999999999999,
-  "remainder_budget": 1131.18,
-  "remainder_hand": 1.5,
-  "total_income": 860.0,
-  "allocated_total": 1989.68,
-  "total_spent": 858.4999999999999,
-  "budget_remainder": 1131.18,
-  "real_remainder": 1.5,
-  "incomes": [
-    {
-      "name": "ЗП муж",
-      "amount": 210.0
-    },
-    {
-      "name": "Родители Муж",
-      "amount": 600.0
-    },
-    {
-      "name": "Родители Жена",
-      "amount": 50.0
-    },
-    {
-      "name": "Прочие доходы",
-      "amount": 0.0
-    }
-  ],
-  "categories": [
-    {
-      "name": "Аренда квартиры",
-      "allocated": 600.0,
-      "spent": 600.0,
-      "remainder": 0.0,
-      "status": "Под 0"
-    },
-    {
-      "name": "Комуналка",
-      "allocated": 120.0,
-      "spent": 0.0,
-      "remainder": 120.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Интернет",
-      "allocated": 28.0,
-      "spent": 0.0,
-      "remainder": 28.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Телефон",
-      "allocated": 31.0,
-      "spent": 10.0,
-      "remainder": 21.0,
-      "status": "В лимите"
-    },
-    {
-      "name": "Спотифай",
-      "allocated": 9.0,
-      "spent": 0.0,
-      "remainder": 9.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Продукты",
-      "allocated": 600.0,
-      "spent": 23.68,
-      "remainder": 576.32,
-      "status": "В лимите"
-    },
-    {
-      "name": "Хоз товары",
-      "allocated": 50.0,
-      "spent": 2.75,
-      "remainder": 47.25,
-      "status": "В лимите"
-    },
-    {
-      "name": "Транспорт",
-      "allocated": 100.0,
-      "spent": 0.0,
-      "remainder": 100.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Билеты на поезд",
-      "allocated": 111.68,
-      "spent": 111.68,
-      "remainder": 0.0,
-      "status": "Под 0"
-    },
-    {
-      "name": "Здоровье",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Аптека",
-      "allocated": 20.0,
-      "spent": 0.0,
-      "remainder": 20.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Спорт",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Спортзал",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Золотое Яблоко",
-      "allocated": 50.0,
-      "spent": 0.0,
-      "remainder": 50.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Уход за женой",
-      "allocated": 50.0,
-      "spent": 0.0,
-      "remainder": 50.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Одежда/Обувь",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Вайлдберриз",
-      "allocated": 0.0,
-      "spent": 82.5,
-      "remainder": -82.5,
-      "status": "Перерасход"
-    },
-    {
-      "name": "Озон",
-      "allocated": 120.0,
-      "spent": 18.99,
-      "remainder": 101.01,
-      "status": "В лимите"
-    },
-    {
-      "name": "Шопинг",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Развлечения",
-      "allocated": 0.0,
-      "spent": 8.9,
-      "remainder": -8.9,
-      "status": "Перерасход"
-    },
-    {
-      "name": "Отложить (накопления)",
-      "allocated": 0.0,
-      "spent": 0.0,
-      "remainder": 0.0,
-      "status": "Остаток"
-    },
-    {
-      "name": "Непредвиденные расходы",
-      "allocated": 100.0,
-      "spent": 0.0,
-      "remainder": 100.0,
-      "status": "Остаток"
-    }
-  ],
-  "updated_at": "2026-10-06 17:20:51",
+  "updated_at": "2026-10-06T19:30:00Z",
   "recent_transactions": [
     {
-      "id": "t_1728210853",
-      "timestamp": "2026-10-06T10:29:43",
-      "category": "Продукты",
-      "amount": 98.63,
+      "timestamp": "2026-10-05T20:45:28.698385",
+      "user_id": 8132078012,
+      "username": "ozonprotect",
+      "month": "Октябрь",
+      "category": "Транспорт",
+      "amount": 9.4,
       "is_income": false,
-      "username": "ReyPris",
+      "raw_text": "тест такси 9.4",
       "cancelled": false
     },
     {
-      "id": "t_1728161549",
-      "timestamp": "2026-10-05T20:52:29",
+      "timestamp": "2026-10-05T20:50:12.307634",
+      "user_id": 8132078012,
+      "username": "ozonprotect",
+      "month": "Октябрь",
+      "category": "Продукты",
+      "amount": 10.0,
+      "is_income": false,
+      "raw_text": "продукты 10",
+      "cancelled": false
+    },
+    {
+      "timestamp": "2026-10-05T20:52:29.903273",
+      "user_id": 8132078012,
+      "username": "ozonprotect",
+      "month": "Октябрь",
       "category": "Хоз товары",
       "amount": 3.25,
       "is_income": false,
-      "username": "ozonprotect",
+      "raw_text": "хозтовары 3.25",
       "cancelled": false
     },
     {
-      "id": "t_1728161412",
-      "timestamp": "2026-10-05T20:50:12",
-      "category": "Телефон",
-      "amount": 10.0,
-      "is_income": false,
-      "username": "ozonprotect",
-      "cancelled": false
-    },
-    {
-      "id": "t_1728161128",
-      "timestamp": "2026-10-05T20:45:28",
+      "timestamp": "2026-10-06T10:29:43.320028",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
       "category": "Продукты",
+      "amount": 98.63,
+      "is_income": false,
+      "raw_text": "98.63 продукты",
+      "status": "undone",
+      "cancelled": true
+    },
+    {
+      "id": "t_1791300142447",
+      "status": "active",
+      "timestamp": "2026-10-06T15:22:22.447272",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Непредвиденные расходы",
       "amount": 9.4,
       "is_income": false,
-      "username": "ozonprotect",
+      "raw_text": "9.4",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791303150409_0",
+      "batch_id": "b_1791303150409",
+      "status": "active",
+      "timestamp": "2026-10-06T16:12:30.409894",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Транспорт",
+      "amount": 11.3,
+      "is_income": false,
+      "raw_text": "11.3",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791303150409_1",
+      "batch_id": "b_1791303150409",
+      "status": "active",
+      "timestamp": "2026-10-06T16:12:33.341087",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Транспорт",
+      "amount": 9.4,
+      "is_income": false,
+      "raw_text": "9.4",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791303150409_2",
+      "batch_id": "b_1791303150409",
+      "status": "active",
+      "timestamp": "2026-10-06T16:12:35.849651",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Транспорт",
+      "amount": 3.7,
+      "is_income": false,
+      "raw_text": "3.7 такси",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791303378739_0",
+      "batch_id": "b_1791303378739",
+      "status": "active",
+      "timestamp": "2026-10-06T16:16:18.739491",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Аптека",
+      "amount": 5.8,
+      "is_income": false,
+      "raw_text": "аптека 5.8",
       "cancelled": false
     }
   ]
