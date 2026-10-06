@@ -773,6 +773,7 @@
     </div>
 
     <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytQe10z89hMsMcD--BCwOvZP05pXkTUqpQYUxVaPkjC3Va3u3WOBogULxyZQWh1fMvEA/exec';
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) {
             tg.ready();
@@ -1294,7 +1295,23 @@
             list.unshift(item);
             saveStoredHistory(list);
 
-            // Call Apps Script
+            // 1. Instant local reactive state update
+            if (!item.is_income) {
+                const catObj = (currentData.categories || []).find(c => c.name === cat);
+                if (catObj) {
+                    catObj.spent = Math.round((catObj.spent + amtVal) * 100) / 100;
+                    catObj.remainder = Math.round((catObj.allocated - catObj.spent) * 100) / 100;
+                    if (catObj.remainder < 0) catObj.status = '⚠ В минус!';
+                    else if (catObj.remainder === 0) catObj.status = 'В ноль';
+                    else catObj.status = '✓ Осталось';
+                }
+                currentData.total_spent = Math.round((currentData.total_spent + amtVal) * 100) / 100;
+                currentData.budget_remainder = Math.round((currentData.allocated_total - currentData.total_spent) * 100) / 100;
+                currentData.real_remainder = Math.round((currentData.total_income - currentData.total_spent) * 100) / 100;
+            }
+            renderView();
+
+            // 2. Call Apps Script to save to Google Sheets
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -1310,9 +1327,9 @@
             showToast(`✅ Записано: ${cat} ${fmt(amtVal)}`);
 
             setTimeout(() => {
-                syncData(true);
+                syncData(false);
                 switchScreen('history');
-            }, 1200);
+            }, 1000);
         }
 
         function switchScreen(screenName) {
@@ -1341,8 +1358,6 @@
                 el.style.display = 'none';
             }, duration);
         }
-
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytQe10z89hMsMcD--BCwOvZP05pXkTUqpQYUxVaPkjC3Va3u3WOBogULxyZQWh1fMvEA/exec';
 
         // Local and Remote History Management
         let historyTransactions = [
@@ -1501,8 +1516,35 @@
                 tg.HapticFeedback.notificationOccurred('warning');
             }
 
+            const val = parseFloat(amount) || 0;
+
+            // 1. Instant local reactive UI update
+            if (!isIncome) {
+                const catObj = (currentData.categories || []).find(c => c.name === category);
+                if (catObj) {
+                    catObj.spent = Math.max(0, Math.round((catObj.spent - val) * 100) / 100);
+                    catObj.remainder = Math.round((catObj.allocated - catObj.spent) * 100) / 100;
+                    if (catObj.remainder < 0) catObj.status = '⚠ В минус!';
+                    else if (catObj.remainder === 0) catObj.status = 'В ноль';
+                    else catObj.status = '✓ Осталось';
+                }
+                currentData.total_spent = Math.max(0, Math.round((currentData.total_spent - val) * 100) / 100);
+                currentData.budget_remainder = Math.round((currentData.allocated_total - currentData.total_spent) * 100) / 100;
+                currentData.real_remainder = Math.round((currentData.total_income - currentData.total_spent) * 100) / 100;
+            } else {
+                const incObj = (currentData.incomes || []).find(c => c.name === category);
+                if (incObj) {
+                    incObj.amount = Math.max(0, Math.round((incObj.amount - val) * 100) / 100);
+                }
+                currentData.total_income = Math.max(0, Math.round((currentData.total_income - val) * 100) / 100);
+                currentData.real_remainder = Math.round((currentData.total_income - currentData.total_spent) * 100) / 100;
+            }
+
+            // Immediately re-render KPI & cards
+            renderView();
+
             try {
-                // Call Google Apps Script with negative amount
+                // 2. Call Google Apps Script with negative amount to deduct from Google Sheet
                 fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1510,24 +1552,24 @@
                     body: JSON.stringify({
                         month: 'Октябрь',
                         category: category,
-                        amount: -Math.abs(amount),
+                        amount: -Math.abs(val),
                         is_income: isIncome
                     })
                 }).catch(() => {});
 
-                // Mark cancelled locally
+                // 3. Mark cancelled locally
                 const list = getStoredHistory();
                 const item = list.find(x => x.id === id);
                 if (item) item.cancelled = true;
                 saveStoredHistory(list);
 
-                showToast(`Транзакция ${category} ${fmt(amount)} отменена!`);
+                showToast(`Транзакция ${category} (${fmt(val)}) отменена!`);
                 renderHistoryList();
 
-                // Trigger live Google Sheets sync
+                // 4. Background cloud sync
                 setTimeout(() => {
-                    syncData(true);
-                }, 1500);
+                    syncData(false);
+                }, 2000);
 
             } catch (err) {
                 showToast('Ошибка при отмене');
