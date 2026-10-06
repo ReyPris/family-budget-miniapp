@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T19:30:00Z",
+  "updated_at": "2026-10-06T19:33:00Z",
   "recent_transactions": [
     {
       "timestamp": "2026-10-05T20:45:28.698385",
@@ -10,7 +10,9 @@
       "amount": 9.4,
       "is_income": false,
       "raw_text": "тест такси 9.4",
-      "cancelled": false
+      "cancelled": false,
+      "id": "t_legacy_0",
+      "status": "active"
     },
     {
       "timestamp": "2026-10-05T20:50:12.307634",
@@ -21,7 +23,9 @@
       "amount": 10.0,
       "is_income": false,
       "raw_text": "продукты 10",
-      "cancelled": false
+      "cancelled": false,
+      "id": "t_legacy_1",
+      "status": "active"
     },
     {
       "timestamp": "2026-10-05T20:52:29.903273",
@@ -32,7 +36,9 @@
       "amount": 3.25,
       "is_income": false,
       "raw_text": "хозтовары 3.25",
-      "cancelled": false
+      "cancelled": false,
+      "id": "t_legacy_2",
+      "status": "active"
     },
     {
       "timestamp": "2026-10-06T10:29:43.320028",
@@ -44,7 +50,8 @@
       "is_income": false,
       "raw_text": "98.63 продукты",
       "status": "undone",
-      "cancelled": true
+      "cancelled": true,
+      "id": "t_legacy_3"
     },
     {
       "id": "t_1791300142447",
