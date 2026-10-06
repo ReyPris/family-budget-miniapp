@@ -1,0 +1,57 @@
+[
+  {
+    "id": "tx_init_1",
+    "date": "2026-10-05T20:52:00",
+    "date_str": "05 окт, 23:52",
+    "month": "Октябрь",
+    "category": "Хоз товары",
+    "amount": 2.75,
+    "is_income": false,
+    "status": "active",
+    "raw": "хозтовары 2.75"
+  },
+  {
+    "id": "tx_init_2",
+    "date": "2026-10-05T20:45:00",
+    "date_str": "05 окт, 23:45",
+    "month": "Октябрь",
+    "category": "Вайлдберриз",
+    "amount": 82.5,
+    "is_income": false,
+    "status": "active",
+    "raw": "вб 82.50"
+  },
+  {
+    "id": "tx_init_3",
+    "date": "2026-10-05T20:40:00",
+    "date_str": "05 окт, 23:40",
+    "month": "Октябрь",
+    "category": "Озон",
+    "amount": 18.99,
+    "is_income": false,
+    "status": "active",
+    "raw": "озон 18.99"
+  },
+  {
+    "id": "tx_init_4",
+    "date": "2026-10-05T20:30:00",
+    "date_str": "05 окт, 23:30",
+    "month": "Октябрь",
+    "category": "Развлечения",
+    "amount": 8.9,
+    "is_income": false,
+    "status": "active",
+    "raw": "развлечения 8.90"
+  },
+  {
+    "id": "tx_init_5",
+    "date": "2026-10-05T20:20:00",
+    "date_str": "05 окт, 23:20",
+    "month": "Октябрь",
+    "category": "Продукты",
+    "amount": 142.31,
+    "is_income": false,
+    "status": "active",
+    "raw": "продукты"
+  }
+]
