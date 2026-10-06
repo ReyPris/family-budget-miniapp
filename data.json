@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T19:33:00Z",
+  "updated_at": "2026-10-06T19:54:00Z",
   "recent_transactions": [
     {
       "timestamp": "2026-10-05T20:45:28.698385",
@@ -23,9 +23,9 @@
       "amount": 10.0,
       "is_income": false,
       "raw_text": "продукты 10",
-      "cancelled": false,
+      "cancelled": true,
       "id": "t_legacy_1",
-      "status": "active"
+      "status": "undone"
     },
     {
       "timestamp": "2026-10-05T20:52:29.903273",
