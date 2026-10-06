@@ -474,6 +474,141 @@
             cursor: pointer;
             margin-top: 14px;
         }
+    
+        /* Navigation & Screens */
+        .screen-view {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .screen-view.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(12, 10, 32, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(168, 85, 247, 0.25);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 999;
+        }
+        .nav-item {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 6px 20px;
+            border-radius: 14px;
+        }
+        .nav-item.active {
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.22);
+        }
+        .nav-item svg {
+            stroke: currentColor;
+        }
+
+        /* History items */
+        .history-item {
+            background: var(--subcard-bg);
+            border: 1px solid var(--subcard-border);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .history-item.cancelled {
+            opacity: 0.5;
+            filter: grayscale(0.6);
+        }
+        .history-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .history-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .history-amt {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .history-amt.minus { color: #f87171; }
+        .history-amt.plus { color: #4ade80; }
+        .history-undo-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+        .history-undo-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: #ffffff;
+        }
+        .history-undo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .cancelled-badge {
+            font-size: 11px;
+            color: #94a3b8;
+            background: rgba(148, 163, 184, 0.15);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .toast-msg {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #c084fc;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 2000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none;
+            animation: fadeIn 0.2s;
+        }
+
     </style>
 </head>
 <body>
@@ -490,7 +625,8 @@
         </div>
     </div>
 
-    <!-- Main Balance Card -->
+    <div id="screen-overview" class="screen-view active">
+        <!-- Main Balance Card -->
     <div class="evo-card">
         <div class="balance-label">Свободный Остаток на руках</div>
         <div class="balance-value" id="kpi-rem-hand">0,00 ₽</div>
@@ -1011,8 +1147,201 @@
             }
         }
 
+        
+        // Screen Navigation
+        function switchScreen(screenName) {
+            if (tg && tg.HapticFeedback) {
+                tg.HapticFeedback.selectionChanged();
+            }
+            document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+            const target = document.getElementById('screen-' + screenName);
+            const btn = document.getElementById('nav-btn-' + screenName);
+            if (target) target.classList.add('active');
+            if (btn) btn.classList.add('active');
+
+            if (screenName === 'history') {
+                loadHistory();
+            }
+        }
+
+        function showToast(text, duration = 3000) {
+            const el = document.getElementById('toast-msg');
+            if (!el) return;
+            el.innerText = text;
+            el.style.display = 'block';
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, duration);
+        }
+
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytQe10z89hMsMcD--BCwOvZP05pXkTUqpQYUxVaPkjC3Va3u3WOBogULxyZQWh1fMvEA/exec';
+
+        // Local and Remote History Management
+        let historyTransactions = [
+            { id: "t_1728210853", timestamp: "2026-10-06T10:29:43", category: "Продукты", amount: 98.63, is_income: false, username: "ReyPris", cancelled: false },
+            { id: "t_1728161549", timestamp: "2026-10-05T20:52:29", category: "Хоз товары", amount: 3.25, is_income: false, username: "ozonprotect", cancelled: false },
+            { id: "t_1728161412", timestamp: "2026-10-05T20:50:12", category: "Телефон", amount: 10.00, is_income: false, username: "ozonprotect", cancelled: false },
+            { id: "t_1728161128", timestamp: "2026-10-05T20:45:28", category: "Продукты", amount: 9.40, is_income: false, username: "ozonprotect", cancelled: false }
+        ];
+
+        function getStoredHistory() {
+            try {
+                const raw = localStorage.getItem('family_budget_history');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch (e) {}
+            return historyTransactions;
+        }
+
+        function saveStoredHistory(list) {
+            try {
+                localStorage.setItem('family_budget_history', JSON.stringify(list));
+            } catch (e) {}
+        }
+
+        async function loadHistory(manual = false) {
+            const container = document.getElementById('history-container');
+            if (!container) return;
+
+            if (tg && tg.HapticFeedback && manual) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+
+            try {
+                // Try to fetch latest data.json from GitHub
+                const res = await fetch(`https://raw.githubusercontent.com/ReyPris/family-budget-miniapp/main/data.json?t=${Date.now()}`);
+                if (res.ok) {
+                    const d = await res.json();
+                    if (d && Array.isArray(d.recent_transactions)) {
+                        const local = getStoredHistory();
+                        const localMap = {};
+                        local.forEach(x => { localMap[x.id] = x.cancelled; });
+
+                        historyTransactions = d.recent_transactions.map(item => ({
+                            ...item,
+                            cancelled: localMap[item.id] !== undefined ? localMap[item.id] : (item.cancelled || false)
+                        }));
+                        saveStoredHistory(historyTransactions);
+                    }
+                }
+            } catch (e) {}
+
+            renderHistoryList();
+        }
+
+        function renderHistoryList() {
+            const container = document.getElementById('history-container');
+            if (!container) return;
+
+            const list = getStoredHistory();
+            if (!list || list.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 32px 16px; color: var(--text-muted); font-size: 13px;">Операций пока нет. Напишите расход в Telegram боте!</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            list.forEach(item => {
+                const dateObj = new Date(item.timestamp);
+                const timeStr = !isNaN(dateObj.getTime())
+                    ? dateObj.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }) + ', ' + dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
+                    : 'Недавно';
+
+                const svg = CATEGORY_SVGS[item.category] || CATEGORY_SVGS['Непредвиденные расходы'];
+                const isInc = item.is_income;
+                const amtClass = isInc ? 'plus' : 'minus';
+                const sign = isInc ? '+' : '−';
+                const card = document.createElement('div');
+                card.className = 'history-item' + (item.cancelled ? ' cancelled' : '');
+                card.id = 'h-item-' + item.id;
+
+                const actionHtml = item.cancelled
+                    ? '<span class="cancelled-badge">Отменено ↺</span>'
+                    : `<button class="history-undo-btn" onclick="undoTransaction('${item.id}', '${item.category}', ${item.amount}, ${isInc})">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38l-5.67 5.67"/></svg> Отменить ↺
+                       </button>`;
+
+                card.innerHTML = `
+                    <div class="history-left">
+                        <div class="cat-icon-box" style="width: 36px; height: 36px; min-width: 36px;">${svg}</div>
+                        <div>
+                            <div style="font-size: 14px; font-weight: 600; color: #ffffff;">${item.category}</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${timeStr} • ${item.username || 'Пользователь'}</div>
+                        </div>
+                    </div>
+                    <div class="history-right">
+                        <div class="history-amt ${amtClass}">${sign}${fmt(item.amount)}</div>
+                        ${actionHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function undoTransaction(id, category, amount, isIncome) {
+            const btn = event ? event.target.closest('button') : null;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = 'Отменяем...';
+            }
+
+            if (tg && tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('warning');
+            }
+
+            try {
+                // Call Google Apps Script with negative amount
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        month: 'Октябрь',
+                        category: category,
+                        amount: -Math.abs(amount),
+                        is_income: isIncome
+                    })
+                }).catch(() => {});
+
+                // Mark cancelled locally
+                const list = getStoredHistory();
+                const item = list.find(x => x.id === id);
+                if (item) item.cancelled = true;
+                saveStoredHistory(list);
+
+                showToast(`Транзакция ${category} ${fmt(amount)} отменена!`);
+                renderHistoryList();
+
+                // Trigger live Google Sheets sync
+                setTimeout(() => {
+                    syncData(true);
+                }, 1500);
+
+            } catch (err) {
+                showToast('Ошибка при отмене');
+                if (btn) btn.disabled = false;
+            }
+        }
+
         renderView();
         syncData();
     </script>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <button class="nav-item active" id="nav-btn-overview" onclick="switchScreen('overview')">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Обзор</span>
+        </button>
+        <button class="nav-item" id="nav-btn-history" onclick="switchScreen('history')">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>История</span>
+        </button>
+    </div>
+    <div class="toast-msg" id="toast-msg"></div>
+
 </body>
 </html>
