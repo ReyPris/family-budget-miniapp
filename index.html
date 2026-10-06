@@ -1433,7 +1433,7 @@
 
                         historyTransactions = d.recent_transactions.map(item => ({
                             ...item,
-                            cancelled: localMap[item.id] !== undefined ? localMap[item.id] : (item.cancelled || false)
+                            cancelled: item.status === 'undone' || (localMap[item.id] !== undefined ? localMap[item.id] : (item.cancelled || false))
                         }));
                         saveStoredHistory(historyTransactions);
                     }
@@ -1454,7 +1454,8 @@
             }
 
             container.innerHTML = '';
-            list.forEach(item => {
+            const displayList = [...list].reverse();
+            displayList.forEach(item => {
                 const dateObj = new Date(item.timestamp);
                 const timeStr = !isNaN(dateObj.getTime())
                     ? dateObj.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }) + ', ' + dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
