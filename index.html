@@ -1344,7 +1344,7 @@
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({
                     month: 'Октябрь',
                     category: cat,
@@ -1355,10 +1355,9 @@
 
             showToast(`✅ Записано: ${cat} ${fmt(amtVal)}`);
 
-            setTimeout(() => {
-                syncData(false);
-                switchScreen('history');
-            }, 1000);
+            // Switch to history tab immediately and render
+            switchScreen('history');
+            renderHistoryList();
         }
 
         function switchScreen(screenName) {
@@ -1390,7 +1389,7 @@
 
         // Local and Remote History Management
         let historyTransactions = [
-            { id: "t_1728210853", timestamp: "2026-10-06T10:29:43", category: "Продукты", amount: 98.63, is_income: false, username: "ReyPris", cancelled: false },
+            { id: "t_1728210853", timestamp: "2026-10-06T10:29:43", category: "Продукты", amount: 98.63, is_income: false, username: "ReyPris", cancelled: true },
             { id: "t_1728161549", timestamp: "2026-10-05T20:52:29", category: "Хоз товары", amount: 3.25, is_income: false, username: "ozonprotect", cancelled: false },
             { id: "t_1728161412", timestamp: "2026-10-05T20:50:12", category: "Телефон", amount: 10.00, is_income: false, username: "ozonprotect", cancelled: false },
             { id: "t_1728161128", timestamp: "2026-10-05T20:45:28", category: "Продукты", amount: 9.40, is_income: false, username: "ozonprotect", cancelled: false }
@@ -1427,7 +1426,7 @@
                 if (res.ok) {
                     const d = await res.json();
                     if (d && Array.isArray(d.recent_transactions)) {
-                        historyTransactions = d.recent_transactions.map((item, idx) => {
+                        const remoteItems = d.recent_transactions.map((item, idx) => {
                             const uniqueId = item.id || `t_item_${idx}`;
                             const isUndone = (item.status === 'undone' || item.cancelled === true);
                             return {
@@ -1436,6 +1435,12 @@
                                 cancelled: isUndone
                             };
                         });
+
+                        const currentLocal = getStoredHistory();
+                        const remoteIdSet = new Set(remoteItems.map(x => x.id));
+                        const localOnly = currentLocal.filter(x => x && x.id && !remoteIdSet.has(x.id));
+
+                        historyTransactions = [...localOnly, ...remoteItems];
                         saveStoredHistory(historyTransactions);
                     }
                 }
