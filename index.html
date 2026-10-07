@@ -545,20 +545,8 @@
             animation: screenSpringIn 0.38s var(--ease-spring) forwards;
         }
         @keyframes screenSpringIn {
-            0% {
-                opacity: 0;
-                transform: translate3d(0, 18px, 0) scale(0.98);
-                filter: blur(4px);
-            }
-            60% {
-                transform: translate3d(0, -2px, 0) scale(1.002);
-                filter: blur(0);
-            }
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
-                filter: blur(0);
-            }
+            0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.985); filter: blur(3px); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
         }
 
         @keyframes spin {
@@ -667,25 +655,25 @@
             filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
         }
 
-        /* History items with enhanced fluid animations */
+        /* History items */
         .history-card-box {
             background: var(--subcard-bg);
             border: 1px solid var(--subcard-border);
             border-radius: 18px;
             margin-bottom: 10px;
             overflow: hidden;
-            transition: transform 0.28s var(--ease-bounce), border-color 0.25s ease, box-shadow 0.25s ease;
-            animation: historyCardIn 0.42s var(--ease-spring) both;
-            animation-delay: calc(var(--delay, 0) * 0.032s);
+            transition: transform 0.25s var(--ease-bounce), border-color 0.25s ease, box-shadow 0.25s ease;
+            animation: historyCardIn 0.38s var(--ease-spring) both;
+            animation-delay: calc(var(--delay, 0) * 0.035s);
             will-change: transform, opacity;
         }
         .history-card-box:active {
-            transform: scale(0.98);
+            transform: scale(0.985);
         }
         @keyframes historyCardIn {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 16px, 0) scale(0.975);
+                transform: translate3d(0, 14px, 0) scale(0.98);
             }
             100% {
                 opacity: 1;
@@ -694,12 +682,11 @@
         }
         @keyframes cancellingPulse {
             0% { transform: scale(1); }
-            35% { transform: scale(0.95); filter: brightness(1.3); }
-            70% { transform: scale(1.02); }
+            40% { transform: scale(0.96); filter: brightness(1.25); }
             100% { transform: scale(1); }
         }
         .history-card-box.cancelling-pulse {
-            animation: cancellingPulse 0.45s var(--ease-bounce);
+            animation: cancellingPulse 0.4s var(--ease-bounce);
         }
         .history-card-box.has-products {
             border-color: rgba(168, 85, 247, 0.35);
@@ -712,11 +699,11 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: background 0.2s, opacity 0.4s var(--ease-spring), filter 0.4s var(--ease-spring);
+            transition: background 0.2s, opacity 0.35s ease, filter 0.35s ease;
         }
         .history-item.cancelled {
-            opacity: 0.48;
-            filter: grayscale(0.75);
+            opacity: 0.5;
+            filter: grayscale(0.6);
         }
         .history-left {
             display: flex;
@@ -734,38 +721,31 @@
             font-family: 'Unbounded', sans-serif;
             font-size: 14px;
             font-weight: 700;
-            transition: all 0.35s var(--ease-spring);
+            transition: transform 0.25s var(--ease-bounce);
         }
         .history-amt.minus { color: #f87171; }
         .history-amt.plus { color: #4ade80; }
-        .history-item.cancelled .history-amt {
-            text-decoration: line-through;
-            opacity: 0.65;
-            transform: scale(0.96);
-        }
         .history-undo-btn {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.35);
             color: #fca5a5;
             font-size: 11px;
             font-weight: 600;
-            padding: 5px 11px;
-            border-radius: 9px;
+            padding: 4px 10px;
+            border-radius: 8px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            transition: all 0.24s var(--ease-bounce);
+            transition: all 0.22s var(--ease-bounce);
             will-change: transform;
         }
         .history-undo-btn:hover {
             background: rgba(239, 68, 68, 0.3);
             color: #ffffff;
-            border-color: rgba(239, 68, 68, 0.6);
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
         }
         .history-undo-btn:active {
-            transform: scale(0.91);
+            transform: scale(0.92);
         }
         .history-undo-btn:disabled {
             opacity: 0.5;
@@ -833,21 +813,11 @@
         }
         .cancelled-badge {
             font-size: 11px;
-            font-weight: 700;
             color: #94a3b8;
             background: rgba(148, 163, 184, 0.15);
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            padding: 3px 9px;
-            border-radius: 8px;
-            animation: badgePopIn 0.32s var(--ease-bounce) both;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        @keyframes badgePopIn {
-            0% { transform: scale(0.65); opacity: 0; }
-            70% { transform: scale(1.08); }
-            100% { transform: scale(1); opacity: 1; }
+            padding: 3px 8px;
+            border-radius: 6px;
+            animation: fadeIn 0.3s ease;
         }
         .toast-msg {
             position: fixed;
@@ -1003,9 +973,9 @@
         const OCTOBER_DATA = {
     "total_income": 860.0,
     "allocated_total": 1989.68,
-    "total_spent": 982.49,
-    "budget_remainder": 1007.19,
-    "real_remainder": -122.49,
+    "total_spent": 859.22,
+    "budget_remainder": 1130.46,
+    "real_remainder": 0.78,
     "incomes": [
         {
             "name": "ЗП муж",
@@ -1091,16 +1061,16 @@
         {
             "name": "Здоровье",
             "allocated": 0.0,
-            "spent": 75.52,
-            "remainder": -75.52,
-            "status": "⚠ В минус!"
+            "spent": 0.0,
+            "remainder": 0.0,
+            "status": "—"
         },
         {
             "name": "Аптека",
             "allocated": 20.0,
-            "spent": 47.75,
-            "remainder": -27.75,
-            "status": "⚠ В минус!"
+            "spent": 0.0,
+            "remainder": 20.0,
+            "status": "✓ Осталось"
         },
         {
             "name": "Спорт",
@@ -1525,22 +1495,13 @@
             }, duration);
         }
 
-        // Bulletproof Persistent History and Cancellation State
-        function getCancelledIds() {
-            try {
-                const raw = localStorage.getItem('family_budget_cancelled_ids');
-                if (raw) return new Set(JSON.parse(raw));
-            } catch (e) {}
-            return new Set();
-        }
-
-        function addCancelledId(id) {
-            try {
-                const set = getCancelledIds();
-                set.add(id);
-                localStorage.setItem('family_budget_cancelled_ids', JSON.stringify([...set]));
-            } catch (e) {}
-        }
+        // Local and Remote History Management
+        let historyTransactions = [
+            { id: "t_1728210853", timestamp: "2026-10-06T10:29:43", category: "Продукты", amount: 98.63, is_income: false, username: "ReyPris", cancelled: true },
+            { id: "t_1728161549", timestamp: "2026-10-05T20:52:29", category: "Хоз товары", amount: 3.25, is_income: false, username: "ozonprotect", cancelled: false },
+            { id: "t_1728161412", timestamp: "2026-10-05T20:50:12", category: "Телефон", amount: 10.00, is_income: false, username: "ozonprotect", cancelled: false },
+            { id: "t_1728161128", timestamp: "2026-10-05T20:45:28", category: "Продукты", amount: 9.40, is_income: false, username: "ozonprotect", cancelled: false }
+        ];
 
         function getStoredHistory() {
             try {
@@ -1550,7 +1511,7 @@
                     if (Array.isArray(parsed) && parsed.length > 0) return parsed;
                 }
             } catch (e) {}
-            return [];
+            return historyTransactions;
         }
 
         function saveStoredHistory(list) {
@@ -1558,8 +1519,6 @@
                 localStorage.setItem('family_budget_history', JSON.stringify(list));
             } catch (e) {}
         }
-
-        
 
         async function loadHistory(manual = false) {
             const container = document.getElementById('history-container');
@@ -1581,40 +1540,25 @@
                 if (res.ok) {
                     const d = await res.json();
                     if (d && Array.isArray(d.recent_transactions)) {
-                        const cancelledSet = getCancelledIds();
-                        const currentLocal = getStoredHistory();
-
-                        // Keep track of any locally marked undone transactions
-                        currentLocal.forEach(x => {
-                            if (x && (x.cancelled || x.status === 'undone')) {
-                                cancelledSet.add(x.id);
-                            }
-                        });
-
                         const remoteItems = d.recent_transactions.map((item, idx) => {
                             const uniqueId = item.id || `t_item_${idx}`;
-                            const isUndone = (item.status === 'undone' || item.cancelled === true || cancelledSet.has(uniqueId));
+                            const isUndone = (item.status === 'undone' || item.cancelled === true);
                             return {
                                 ...item,
                                 id: uniqueId,
-                                cancelled: isUndone,
-                                status: isUndone ? 'undone' : (item.status || 'active')
+                                cancelled: isUndone
                             };
                         });
 
+                        const currentLocal = getStoredHistory();
                         const remoteIdSet = new Set(remoteItems.map(x => x.id));
-                        const localOnly = currentLocal.filter(x => x && x.id && !remoteIdSet.has(x.id)).map(x => ({
-                            ...x,
-                            cancelled: x.cancelled || cancelledSet.has(x.id),
-                            status: (x.cancelled || cancelledSet.has(x.id)) ? 'undone' : (x.status || 'active')
-                        }));
+                        const localOnly = currentLocal.filter(x => x && x.id && !remoteIdSet.has(x.id));
 
-                        const merged = [...localOnly, ...remoteItems];
-                        saveStoredHistory(merged);
+                        historyTransactions = [...localOnly, ...remoteItems];
+                        saveStoredHistory(historyTransactions);
                     }
                 }
             } catch (e) {
-                console.warn('Error fetching remote history:', e);
             } finally {
                 if (syncBtn) {
                     syncBtn.classList.remove('loading');
@@ -1632,7 +1576,7 @@
 
             const list = getStoredHistory();
             if (!list || list.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 36px 16px; color: var(--text-muted); font-size: 13px;">Операций пока нет. Напишите расход в Telegram боте!</div>';
+                container.innerHTML = '<div style="text-align: center; padding: 32px 16px; color: var(--text-muted); font-size: 13px;">Операций пока нет. Напишите расход в Telegram боте!</div>';
                 return;
             }
 
@@ -1642,7 +1586,6 @@
                 const tb = new Date(b.timestamp || 0).getTime() || 0;
                 return tb - ta;
             });
-
             displayList.forEach((item, idx) => {
                 const dateObj = new Date(item.timestamp);
                 const timeStr = !isNaN(dateObj.getTime())
@@ -1654,24 +1597,56 @@
                 const amtClass = isInc ? 'plus' : 'minus';
                 const sign = isInc ? '+' : '−';
 
+                // Check for itemized products list
+                const products = item.products || item.items || [];
+                const hasProducts = products.length > 0;
+
                 const cardBox = document.createElement('div');
-                cardBox.className = 'history-card-box';
+                cardBox.className = 'history-card-box' + (hasProducts ? ' has-products' : '');
                 cardBox.id = 'h-box-' + item.id;
-                cardBox.style.setProperty('--delay', Math.min(idx, 15));
+                cardBox.style.setProperty('--delay', idx);
 
                 const actionHtml = item.cancelled
                     ? '<span class="cancelled-badge">Отменено ↺</span>'
-                    : `<button class="history-undo-btn" id="undo-btn-${item.id}" onclick="undoTransaction('${item.id}', '${item.category}', ${item.amount}, ${isInc}, event)">
+                    : `<button class="history-undo-btn" onclick="undoTransaction('${item.id}', '${item.category}', ${item.amount}, ${isInc})">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38l-5.67 5.67"/></svg> Отменить ↺
                        </button>`;
 
+                const expandBadge = hasProducts
+                    ? `<div class="history-badge-expand" data-count="${products.length}">🧾 Позиций: ${products.length} ▼</div>`
+                    : '';
+
+                let productsHtml = '';
+                if (hasProducts) {
+                    const rowsHtml = products.map(p => `
+                        <div class="product-item-row">
+                            <div class="product-item-name">
+                                <span>🛒</span>
+                                <span>${p.name || 'Товар'}</span>
+                                ${p.qty ? `<span style="font-size:10px; color:var(--text-muted);">x${p.qty}</span>` : ''}
+                            </div>
+                            <div class="product-item-price">${fmt(p.price || p.sum || 0)}</div>
+                        </div>
+                    `).join('');
+
+                    productsHtml = `
+                        <div class="history-products-wrapper" id="prods-${item.id}">
+                            <div class="history-products-inner">
+                                <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Состав чека:</div>
+                                ${rowsHtml}
+                            </div>
+                        </div>
+                    `;
+                }
+
                 cardBox.innerHTML = `
-                    <div class="history-item ${item.cancelled ? 'cancelled' : ''}">
+                    <div class="history-item ${item.cancelled ? 'cancelled' : ''}" onclick="toggleProducts('${item.id}', event)">
                         <div class="history-left">
                             <div class="cat-icon-box" style="width: 36px; height: 36px; min-width: 36px;">${svg}</div>
                             <div>
                                 <div style="font-size: 14px; font-weight: 600; color: #ffffff;">${item.category}</div>
                                 <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${timeStr} • ${item.username || 'Пользователь'}</div>
+                                ${expandBadge}
                             </div>
                         </div>
                         <div class="history-right">
@@ -1679,17 +1654,29 @@
                             ${actionHtml}
                         </div>
                     </div>
+                    ${productsHtml}
                 `;
                 container.appendChild(cardBox);
             });
         }
 
-        async function undoTransaction(id, category, amount, isIncome, ev) {
-            if (ev) {
-                if (typeof ev.stopPropagation === 'function') ev.stopPropagation();
-                if (typeof ev.preventDefault === 'function') ev.preventDefault();
+        function toggleProducts(id, ev) {
+            if (ev && ev.target && ev.target.closest('.history-undo-btn')) return;
+            const el = document.getElementById('prods-' + id);
+            const box = document.getElementById('h-box-' + id);
+            const badge = box ? box.querySelector('.history-badge-expand') : null;
+            if (el) {
+                const isOpen = el.classList.toggle('open');
+                if (badge) {
+                    const count = badge.getAttribute('data-count') || '';
+                    badge.innerHTML = isOpen ? `🧾 Позиций: ${count} ▲` : `🧾 Позиций: ${count} ▼`;
+                }
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
             }
-            const btn = document.getElementById('undo-btn-' + id) || (ev && ev.target ? ev.target.closest('button') : null);
+        }
+
+        async function undoTransaction(id, category, amount, isIncome) {
+            const btn = event ? event.target.closest('button') : null;
             const cardBox = document.getElementById('h-box-' + id);
             if (btn) {
                 btn.disabled = true;
@@ -1730,33 +1717,8 @@
             // Immediately re-render KPI & cards
             renderView();
 
-            // 2. Mark cancelled permanently in storage
-            addCancelledId(id);
-            const list = getStoredHistory();
-            const item = list.find(x => x.id === id);
-            if (item) {
-                item.cancelled = true;
-                item.status = 'undone';
-            }
-            saveStoredHistory(list);
-
-            // 3. Smooth card transformation in place
-            if (cardBox) {
-                const hItem = cardBox.querySelector('.history-item');
-                if (hItem) hItem.classList.add('cancelled');
-                const rBox = cardBox.querySelector('.history-right');
-                if (rBox) {
-                    const btnEl = rBox.querySelector('.history-undo-btn');
-                    if (btnEl) {
-                        btnEl.outerHTML = '<span class="cancelled-badge">Отменено ↺</span>';
-                    }
-                }
-            }
-
-            showToast(`Транзакция ${category} (${fmt(val)}) отменена!`);
-
-            // 4. Send negative amount to Google Apps Script
             try {
+                // 2. Call Google Apps Script with negative amount to deduct from Google Sheet
                 fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1768,10 +1730,25 @@
                         is_income: isIncome
                     })
                 }).catch(() => {});
-            } catch (e) {}
 
-            // 5. Update GitHub data.json in the background
-            
+                // 3. Mark cancelled locally
+                const list = getStoredHistory();
+                const item = list.find(x => x.id === id);
+                if (item) item.cancelled = true;
+                saveStoredHistory(list);
+
+                showToast(`Транзакция ${category} (${fmt(val)}) отменена!`);
+                renderHistoryList();
+
+                // 4. Background cloud sync
+                setTimeout(() => {
+                    syncData(false);
+                }, 2000);
+
+            } catch (err) {
+                showToast('Ошибка при отмене');
+                if (btn) btn.disabled = false;
+            }
         }
 
         renderView();
