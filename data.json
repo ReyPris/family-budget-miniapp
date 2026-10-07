@@ -1,10 +1,81 @@
 {
-  "updated_at": "2026-10-07T08:00:00Z",
+  "updated_at": "2026-10-07T23:40:42.606895",
   "recent_transactions": [
     {
-      "id": "b_1791303378739_0",
+      "id": "b_1791394785464_0",
+      "batch_id": "b_1791394785464",
       "status": "active",
-      "timestamp": "2026-10-06T16:16:18.739491",
+      "timestamp": "2026-10-07T17:39:45.464582",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Здоровье",
+      "amount": 75.52,
+      "is_income": false,
+      "raw_text": "здоровье 75.52",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394691041_0",
+      "batch_id": "b_1791394691041",
+      "status": "active",
+      "timestamp": "2026-10-07T17:38:11.041089",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Продукты",
+      "amount": 23.68,
+      "is_income": false,
+      "raw_text": "продукты 23.68",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394678889_0",
+      "batch_id": "b_1791394678889",
+      "status": "active",
+      "timestamp": "2026-10-07T17:37:58.889662",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Продукты",
+      "amount": 3.29,
+      "is_income": false,
+      "raw_text": "продукты 3.29",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394669214_0",
+      "batch_id": "b_1791394669214",
+      "status": "active",
+      "timestamp": "2026-10-07T17:37:49.214142",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Продукты",
+      "amount": 51.6,
+      "is_income": false,
+      "raw_text": "продукты 51.60",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394659901_0",
+      "batch_id": "b_1791394659901",
+      "status": "active",
+      "timestamp": "2026-10-07T17:37:39.901799",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Продукты",
+      "amount": 98.63,
+      "is_income": false,
+      "raw_text": "продукты 98.63",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394603736_0",
+      "batch_id": "b_1791394603736",
+      "status": "active",
+      "timestamp": "2026-10-07T17:36:43.736340",
       "user_id": 1411852688,
       "username": "ReyPris",
       "month": "Октябрь",
@@ -12,6 +83,20 @@
       "amount": 5.8,
       "is_income": false,
       "raw_text": "аптека 5.8",
+      "cancelled": false
+    },
+    {
+      "id": "b_1791394576736_0",
+      "batch_id": "b_1791394576736",
+      "status": "active",
+      "timestamp": "2026-10-07T17:36:16.736881",
+      "user_id": 1411852688,
+      "username": "ReyPris",
+      "month": "Октябрь",
+      "category": "Аптека",
+      "amount": 41.95,
+      "is_income": false,
+      "raw_text": "аптека 41.95",
       "cancelled": false
     },
     {
@@ -79,7 +164,7 @@
       "category": "Хоз товары",
       "amount": 3.25,
       "is_income": false,
-      "raw_text": "хозтовары 3.25",
+      "raw_text": "мыло 3.25",
       "cancelled": false
     },
     {
@@ -92,7 +177,7 @@
       "category": "Транспорт",
       "amount": 9.4,
       "is_income": false,
-      "raw_text": "тест такси 9.4",
+      "raw_text": "такси 9.4",
       "cancelled": false
     }
   ]
