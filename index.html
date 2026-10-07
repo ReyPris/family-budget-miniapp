@@ -22,6 +22,9 @@
             --green: #22c55e;
             --amber: #f59e0b;
             --red: #ef4444;
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -109,6 +112,18 @@
             border-radius: 50%;
             background: #22c55e;
             box-shadow: 0 0 8px #22c55e;
+            animation: pulseDot 2.4s infinite ease-in-out;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 8px #22c55e;
+            }
+            50% {
+                transform: scale(1.28);
+                box-shadow: 0 0 14px rgba(34, 197, 94, 0.85);
+            }
         }
 
         /* Main Balance Card */
@@ -129,6 +144,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 14px;
+            letter-spacing: -0.4px;
+            transition: transform 0.3s var(--ease-spring);
+            display: inline-block;
         }
 
         /* KPI 4 Grid */
@@ -144,6 +162,15 @@
             border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 16px;
             padding: 12px 14px;
+            transition: transform 0.22s var(--ease-bounce), border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+            will-change: transform;
+        }
+
+        .kpi-card:active {
+            transform: scale(0.95);
+            border-color: rgba(168, 85, 247, 0.55);
+            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.3);
+            background: rgba(30, 16, 58, 0.85);
         }
 
         .kpi-title {
@@ -160,6 +187,19 @@
             font-size: 13px;
             font-weight: 800;
             white-space: nowrap;
+            transition: transform 0.25s var(--ease-bounce), text-shadow 0.25s ease;
+            display: inline-block;
+            will-change: transform;
+        }
+
+        @keyframes numberPulse {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.08); filter: brightness(1.25); text-shadow: 0 0 14px rgba(192, 132, 252, 0.6); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        .number-pulse {
+            animation: numberPulse 0.45s var(--ease-bounce);
         }
 
         .kpi-val.green { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
@@ -187,15 +227,29 @@
             color: var(--text-muted);
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.22s var(--ease-bounce), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.2s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            will-change: transform;
+        }
+
+        .tab-btn:active {
+            transform: scale(0.92);
         }
 
         .tab-btn.active {
             background: linear-gradient(135deg, #7c3aed 0%, #4338ca 100%);
             border-color: #c084fc;
             color: #ffffff;
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
             font-weight: 800;
+            animation: tabPop 0.32s var(--ease-bounce);
+        }
+
+        @keyframes tabPop {
+            0% { transform: scale(0.93); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         /* Search Input */
@@ -213,12 +267,14 @@
             color: #ffffff;
             font-size: 12px;
             outline: none;
-            transition: all 0.2s ease;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .search-input:focus {
             border-color: #c084fc;
-            box-shadow: 0 0 14px rgba(192, 132, 252, 0.35);
+            box-shadow: 0 0 18px rgba(192, 132, 252, 0.35);
+            background: rgba(18, 10, 40, 0.95);
+            transform: translateY(-1px);
         }
 
         .search-icon {
@@ -245,11 +301,31 @@
             border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 18px;
             padding: 13px 15px;
-            transition: all 0.2s ease;
+            transition: transform 0.22s var(--ease-bounce), border-color 0.25s ease, box-shadow 0.25s ease;
+            animation: cardStaggerIn 0.38s var(--ease-spring) both;
+            animation-delay: calc(var(--delay, 0) * 0.025s);
+            will-change: transform, opacity;
+        }
+
+        .cat-card:active {
+            transform: scale(0.97) translateY(1px);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.25);
         }
 
         .cat-card:hover {
             border-color: rgba(192, 132, 252, 0.45);
+        }
+
+        @keyframes cardStaggerIn {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 14px, 0) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+            }
         }
 
         .cat-header {
@@ -310,17 +386,39 @@
         /* Progress Bar */
         .progress-track {
             width: 100%;
-            height: 6px;
+            height: 7px;
             background: rgba(14, 8, 30, 0.95);
             border-radius: 10px;
             overflow: hidden;
             margin: 8px 0;
+            position: relative;
         }
 
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-            transition: width 0.4s ease;
+            transition: width 0.85s var(--ease-spring);
+            position: relative;
+            overflow: hidden;
+            will-change: width;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+            transform: translateX(-100%);
+            animation: progressShimmer 2.4s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
         }
 
         .progress-fill.green {
@@ -368,6 +466,7 @@
             border-radius: 18px;
             padding: 14px;
             margin-bottom: 14px;
+            transition: border-color 0.25s ease, background 0.25s ease;
         }
         
         .guide-header {
@@ -375,6 +474,11 @@
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .guide-header:active {
+            transform: scale(0.98);
         }
 
         .guide-title {
@@ -387,18 +491,35 @@
             gap: 8px;
         }
 
+        #guide-arrow {
+            transition: transform 0.35s var(--ease-spring);
+        }
+
+        #guide-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .guide-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.38s var(--ease-spring);
+        }
+
+        .guide-wrapper.open {
+            grid-template-rows: 1fr;
+        }
+
+        .guide-inner {
+            overflow: hidden;
+        }
+
         .guide-content {
-            display: none;
-            margin-top: 12px;
             padding-top: 12px;
+            margin-top: 10px;
             border-top: 1px solid rgba(168, 85, 247, 0.15);
             font-size: 11px;
             line-height: 1.6;
             color: var(--text-muted);
-        }
-
-        .guide-content.open {
-            display: block;
         }
 
         .guide-item {
@@ -411,47 +532,28 @@
             color: #ffffff;
         }
 
-        /* Authentic Evolud Floating Bottom Navigation Bar */
-        .evolud-bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 8px 12px;
-            background: radial-gradient(farthest-side at bottom, rgba(76, 29, 149, 0.9), rgba(12, 14, 38, 0.95));
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 30px;
-            position: fixed;
-            bottom: 16px;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            width: 90%;
-            max-width: 400px;
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(124, 58, 237, 0.25);
+        /* Navigation & Screens */
+        .screen-view {
+            display: none;
+            opacity: 0;
+            transform: translate3d(0, 14px, 0) scale(0.985);
+            transition: opacity 0.32s var(--ease-spring), transform 0.32s var(--ease-spring);
+            will-change: opacity, transform;
+        }
+        .screen-view.active {
+            display: block;
+            animation: screenSpringIn 0.38s var(--ease-spring) forwards;
+        }
+        @keyframes screenSpringIn {
+            0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.985); filter: blur(3px); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            color: var(--text-muted);
-            font-size: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
-
-        .nav-item.active {
-            color: #ffffff;
-        }
-
-        .nav-item.active svg {
-            stroke: var(--purple);
-            filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.6));
+        .sync-btn.loading svg, .spinning {
+            animation: spin 0.75s linear infinite;
         }
 
         .sync-btn {
@@ -473,31 +575,19 @@
             box-shadow: 0 0 20px rgba(124, 58, 237, 0.45);
             cursor: pointer;
             margin-top: 14px;
+            transition: transform 0.22s var(--ease-bounce), box-shadow 0.25s ease, opacity 0.2s ease;
+            will-change: transform;
         }
-    
-        /* Navigation & Screens */
-        .screen-view {
-            display: none;
-            opacity: 0;
-            transform: translateY(12px) scale(0.99);
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        .sync-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
         }
-        .screen-view.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            animation: springIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .sync-btn.loading {
+            animation: pulseSync 1.4s infinite ease-in-out;
         }
-        @keyframes springIn {
-            0% { opacity: 0; transform: translateY(14px) scale(0.985); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-        .sync-btn.loading svg, .spinning {
-            animation: spin 0.75s linear infinite;
+        @keyframes pulseSync {
+            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.45); }
+            50% { box-shadow: 0 0 35px rgba(192, 132, 252, 0.75); }
         }
 
         /* 2-Tab Floating Glass Navigation Dock */
@@ -508,16 +598,17 @@
             right: 20px;
             max-width: 360px;
             margin: 0 auto;
-            height: 60px;
+            height: 62px;
             background: rgba(14, 10, 32, 0.88);
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
             border: 1px solid rgba(168, 85, 247, 0.32);
-            border-radius: 30px;
+            border-radius: 32px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 5px 8px;
+            gap: 32px;
+            padding: 6px 14px;
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 24px rgba(124, 58, 237, 0.25);
             z-index: 999;
         }
@@ -532,26 +623,36 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 10px 24px;
+            transition: all 0.28s var(--ease-spring);
+            padding: 10px 22px;
             border-radius: 24px;
-            flex: 1;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
         }
         .nav-item:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
         .nav-item.active {
             color: #ffffff;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%);
-            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.5);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%);
+            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            animation: navPillBounce 0.35s var(--ease-bounce);
+        }
+        @keyframes navPillBounce {
+            0% { transform: scale(0.92); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         .nav-item svg {
             stroke: currentColor;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s var(--ease-bounce);
         }
         .nav-item.active svg {
-            transform: scale(1.15);
+            transform: scale(1.18);
             stroke: #ffffff;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
         }
 
         /* History items */
@@ -561,7 +662,31 @@
             border-radius: 18px;
             margin-bottom: 10px;
             overflow: hidden;
-            transition: all 0.25s ease;
+            transition: transform 0.25s var(--ease-bounce), border-color 0.25s ease, box-shadow 0.25s ease;
+            animation: historyCardIn 0.38s var(--ease-spring) both;
+            animation-delay: calc(var(--delay, 0) * 0.035s);
+            will-change: transform, opacity;
+        }
+        .history-card-box:active {
+            transform: scale(0.985);
+        }
+        @keyframes historyCardIn {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 14px, 0) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+        @keyframes cancellingPulse {
+            0% { transform: scale(1); }
+            40% { transform: scale(0.96); filter: brightness(1.25); }
+            100% { transform: scale(1); }
+        }
+        .history-card-box.cancelling-pulse {
+            animation: cancellingPulse 0.4s var(--ease-bounce);
         }
         .history-card-box.has-products {
             border-color: rgba(168, 85, 247, 0.35);
@@ -574,7 +699,7 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.2s, opacity 0.35s ease, filter 0.35s ease;
         }
         .history-item.cancelled {
             opacity: 0.5;
@@ -596,6 +721,7 @@
             font-family: 'Unbounded', sans-serif;
             font-size: 14px;
             font-weight: 700;
+            transition: transform 0.25s var(--ease-bounce);
         }
         .history-amt.minus { color: #f87171; }
         .history-amt.plus { color: #4ade80; }
@@ -611,11 +737,15 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            transition: all 0.2s;
+            transition: all 0.22s var(--ease-bounce);
+            will-change: transform;
         }
         .history-undo-btn:hover {
             background: rgba(239, 68, 68, 0.3);
             color: #ffffff;
+        }
+        .history-undo-btn:active {
+            transform: scale(0.92);
         }
         .history-undo-btn:disabled {
             opacity: 0.5;
@@ -632,17 +762,28 @@
             padding: 3px 8px;
             border-radius: 12px;
             margin-top: 4px;
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
-        .history-products-list {
-            display: none;
-            padding: 12px 16px 14px 16px;
+        .history-badge-expand:active {
+            transform: scale(0.94);
+        }
+        .history-products-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s var(--ease-spring);
             background: rgba(8, 4, 22, 0.55);
-            border-top: 1px dashed rgba(168, 85, 247, 0.25);
-            animation: fadeIn 0.2s ease;
         }
-        .history-products-list.open {
-            display: block;
+        .history-products-wrapper.open {
+            grid-template-rows: 1fr;
+            border-top: 1px dashed rgba(168, 85, 247, 0.25);
+        }
+        .history-products-inner {
+            overflow: hidden;
+            padding: 0 16px;
+            transition: padding 0.35s var(--ease-spring);
+        }
+        .history-products-wrapper.open .history-products-inner {
+            padding: 12px 16px 14px 16px;
         }
         .product-item-row {
             display: flex;
@@ -652,6 +793,7 @@
             font-size: 12px;
             color: #cbd5e1;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.25s ease;
         }
         .product-item-row:last-child {
             border-bottom: none;
@@ -675,23 +817,35 @@
             background: rgba(148, 163, 184, 0.15);
             padding: 3px 8px;
             border-radius: 6px;
+            animation: fadeIn 0.3s ease;
         }
         .toast-msg {
             position: fixed;
-            top: 16px;
+            top: 18px;
             left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid #c084fc;
+            transform: translate3d(-50%, -60px, 0) scale(0.9);
+            opacity: 0;
+            pointer-events: none;
+            background: rgba(18, 12, 38, 0.94);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(192, 132, 252, 0.45);
             color: #ffffff;
-            padding: 10px 18px;
-            border-radius: 12px;
+            padding: 10px 22px;
+            border-radius: 20px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             z-index: 2000;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            display: none;
-            animation: fadeIn 0.2s;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.75), 0 0 20px rgba(168, 85, 247, 0.35);
+            transition: transform 0.38s var(--ease-bounce), opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast-msg.show {
+            transform: translate3d(-50%, 0, 0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
         }
 
     </style>
@@ -746,12 +900,16 @@
             </div>
             <svg id="guide-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="guide-content" id="guide-content">
-            <div class="guide-item">💳 <div><b>Свободный Остаток на руках:</b> Реальные живые деньги (<code>Доход − Потрачено</code>).</div></div>
-            <div class="guide-item">🟢 <div><b>Общий Доход:</b> Все приходы за месяц (ЗП, помощь родителей).</div></div>
-            <div class="guide-item">🟣 <div><b>Выделено (План):</b> Запланированные лимиты по всем 22 категориям.</div></div>
-            <div class="guide-item">🔴 <div><b>Всего Потрачено:</b> Фактические расходы с копейками.</div></div>
-            <div class="guide-item">🟡 <div><b>Остаток в Бюджете:</b> Неизрасходованная часть плановых лимитов (<code>Выделено − Потрачено</code>).</div></div>
+        <div class="guide-wrapper" id="guide-wrapper">
+            <div class="guide-inner">
+                <div class="guide-content" id="guide-content">
+                    <div class="guide-item">💳 <div><b>Свободный Остаток на руках:</b> Реальные живые деньги (<code>Доход − Потрачено</code>).</div></div>
+                    <div class="guide-item">🟢 <div><b>Общий Доход:</b> Все приходы за месяц (ЗП, помощь родителей).</div></div>
+                    <div class="guide-item">🟣 <div><b>Выделено (План):</b> Запланированные лимиты по всем 22 категориям.</div></div>
+                    <div class="guide-item">🔴 <div><b>Всего Потрачено:</b> Фактические расходы с копейками.</div></div>
+                    <div class="guide-item">🟡 <div><b>Остаток в Бюджете:</b> Неизрасходованная часть плановых лимитов (<code>Выделено − Потрачено</code>).</div></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -774,7 +932,7 @@
         <div class="cat-list" id="cat-list"></div>
 
         <!-- Sync Button -->
-        <button class="sync-btn" onclick="syncData(true)">
+        <button id="btn-sync-overview" class="sync-btn" onclick="syncData(true)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
             Обновить из Google Таблиц
         </button>
@@ -789,7 +947,7 @@
                     <div class="header-title" style="font-size:18px;">История операций</div>
                     <div class="header-sub">Добавленные траты и отмена</div>
                 </div>
-                <button class="sync-btn" onclick="loadHistory(true)" style="margin:0; padding:6px 14px; font-size:11px;">
+                <button id="btn-sync-history" class="sync-btn" onclick="loadHistory(true)" style="margin:0; padding:6px 14px; font-size:11px;">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Обновить
                 </button>
             </div>
@@ -815,9 +973,9 @@
         const OCTOBER_DATA = {
     "total_income": 860.0,
     "allocated_total": 1989.68,
-    "total_spent": 865.02,
-    "budget_remainder": 1124.66,
-    "real_remainder": -5.02,
+    "total_spent": 859.22,
+    "budget_remainder": 1130.46,
+    "real_remainder": 0.78,
     "incomes": [
         {
             "name": "ЗП муж",
@@ -910,8 +1068,8 @@
         {
             "name": "Аптека",
             "allocated": 20.0,
-            "spent": 5.8,
-            "remainder": 14.2,
+            "spent": 0.0,
+            "remainder": 20.0,
             "status": "✓ Осталось"
         },
         {
@@ -1037,9 +1195,56 @@
             return isNaN(f) ? 0.0 : f;
         }
 
+        const prevKpiValues = {
+            'kpi-rem-hand': 0,
+            'kpi-income': 0,
+            'kpi-allocated': 0,
+            'kpi-spent': 0,
+            'kpi-rem-budget': 0
+        };
+        let isFirstRender = true;
+
+        function animateKpi(id, targetVal) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const fromVal = prevKpiValues[id] !== undefined ? prevKpiValues[id] : 0;
+            prevKpiValues[id] = targetVal;
+
+            if (Math.abs(fromVal - targetVal) < 0.01 && !isFirstRender) {
+                el.innerText = fmt(targetVal);
+                return;
+            }
+
+            const duration = isFirstRender ? 800 : 450;
+            const startTime = performance.now();
+
+            el.classList.remove('number-pulse');
+            void el.offsetWidth;
+            el.classList.add('number-pulse');
+
+            function update(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // easeOutExpo
+                const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const current = fromVal + (targetVal - fromVal) * ease;
+                el.innerText = fmt(current);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = fmt(targetVal);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
         function toggleGuide() {
-            const el = document.getElementById('guide-content');
-            el.classList.toggle('open');
+            const wrapper = document.getElementById('guide-wrapper');
+            const arrow = document.getElementById('guide-arrow');
+            if (wrapper) wrapper.classList.toggle('open');
+            if (arrow) arrow.classList.toggle('open');
+            if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
         function setTab(tab, btn) {
@@ -1050,11 +1255,12 @@
         }
 
         function renderView() {
-            document.getElementById('kpi-income').innerText = fmt(currentData.total_income);
-            document.getElementById('kpi-allocated').innerText = fmt(currentData.allocated_total);
-            document.getElementById('kpi-spent').innerText = fmt(currentData.total_spent);
-            document.getElementById('kpi-rem-budget').innerText = fmt(currentData.budget_remainder);
-            document.getElementById('kpi-rem-hand').innerText = fmt(currentData.real_remainder);
+            animateKpi('kpi-income', currentData.total_income);
+            animateKpi('kpi-allocated', currentData.allocated_total);
+            animateKpi('kpi-spent', currentData.total_spent);
+            animateKpi('kpi-rem-budget', currentData.budget_remainder);
+            animateKpi('kpi-rem-hand', currentData.real_remainder);
+            isFirstRender = false;
 
             const query = document.getElementById('search-input').value.toLowerCase().trim();
             const container = document.getElementById('cat-list');
@@ -1062,10 +1268,11 @@
 
             if (activeTab === 'income') {
                 // Render Income Sources Tab
-                currentData.incomes.forEach(inc => {
+                currentData.incomes.forEach((inc, idx) => {
                     if (query && !inc.name.toLowerCase().includes(query)) return;
                     const card = document.createElement('div');
                     card.className = 'cat-card';
+                    card.style.setProperty('--delay', idx);
                     card.innerHTML = `
                         <div class="cat-header">
                             <div class="cat-title-group">
@@ -1099,7 +1306,7 @@
                 return;
             }
 
-            list.forEach(c => {
+            list.forEach((c, index) => {
                 const svgIcon = CATEGORY_SVGS[c.name] || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c084fc" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>';
                 const allocated = floatVal(c.allocated);
                 const spent = floatVal(c.spent);
@@ -1116,6 +1323,7 @@
 
                 const card = document.createElement('div');
                 card.className = 'cat-card';
+                card.style.setProperty('--delay', index);
                 card.innerHTML = `
                     <div class="cat-header">
                         <div class="cat-title-group">
@@ -1131,7 +1339,7 @@
                         </div>
                     </div>
                     <div class="progress-track">
-                        <div class="progress-fill ${colorClass}" style="width: ${pct}%;"></div>
+                        <div class="progress-fill ${colorClass}" data-target-width="${pct}%" style="width: 0%;"></div>
                     </div>
                     <div class="cat-footer">
                         <span class="pct-badge ${colorClass}">${pct}% освоено</span>
@@ -1139,6 +1347,19 @@
                     </div>
                 `;
                 container.appendChild(card);
+            });
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    container.querySelectorAll('.progress-fill').forEach((bar, idx) => {
+                        const tw = bar.getAttribute('data-target-width');
+                        if (tw) {
+                            setTimeout(() => {
+                                bar.style.width = tw;
+                            }, Math.min(idx * 16, 250));
+                        }
+                    });
+                });
             });
         }
 
@@ -1209,10 +1430,11 @@
         }
 
         async function syncData(manual = false) {
-            const btn = document.querySelector('.sync-btn');
+            const btn = document.getElementById('btn-sync-overview');
             if (btn) {
-                btn.style.opacity = '0.6';
-                btn.innerText = 'Обновление из Google Таблиц...';
+                btn.classList.add('loading');
+                btn.style.opacity = '0.75';
+                btn.innerHTML = `<svg width="14" height="14" class="spinning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Обновление из Google Таблиц...`;
             }
             if (tg && tg.HapticFeedback && manual) {
                 tg.HapticFeedback.impactOccurred('medium');
@@ -1227,9 +1449,10 @@
                     }
                 }
             } catch (e) {
-                console.log("Error fetching from Google Sheets, using fallback:", e);
+                console.warn("Error fetching from Google Sheets, using fallback:", e);
             } finally {
                 if (btn) {
+                    btn.classList.remove('loading');
                     btn.style.opacity = '1';
                     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Обновить из Google Таблиц`;
                 }
@@ -1241,26 +1464,34 @@
             if (tg && tg.HapticFeedback) {
                 tg.HapticFeedback.selectionChanged();
             }
-            document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-
+            const activeScreen = document.querySelector('.screen-view.active');
             const target = document.getElementById('screen-' + screenName);
             const btn = document.getElementById('nav-btn-' + screenName);
-            if (target) target.classList.add('active');
+
+            if (activeScreen === target) return;
+
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
+
+            if (activeScreen) activeScreen.classList.remove('active');
+            if (target) target.classList.add('active');
 
             if (screenName === 'history') {
                 loadHistory();
+            } else {
+                renderView();
             }
         }
 
+        let toastTimer = null;
         function showToast(text, duration = 3000) {
             const el = document.getElementById('toast-msg');
             if (!el) return;
-            el.innerText = text;
-            el.style.display = 'block';
-            setTimeout(() => {
-                el.style.display = 'none';
+            el.innerHTML = `<span>✨</span><span>${text}</span>`;
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                el.classList.remove('show');
             }, duration);
         }
 
@@ -1291,6 +1522,12 @@
 
         async function loadHistory(manual = false) {
             const container = document.getElementById('history-container');
+            const syncBtn = document.getElementById('btn-sync-history');
+            if (syncBtn) {
+                syncBtn.classList.add('loading');
+                const svg = syncBtn.querySelector('svg');
+                if (svg) svg.classList.add('spinning');
+            }
             if (!container) return;
 
             if (tg && tg.HapticFeedback && manual) {
@@ -1321,7 +1558,14 @@
                         saveStoredHistory(historyTransactions);
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+            } finally {
+                if (syncBtn) {
+                    syncBtn.classList.remove('loading');
+                    const svg = syncBtn.querySelector('svg');
+                    if (svg) svg.classList.remove('spinning');
+                }
+            }
 
             renderHistoryList();
         }
@@ -1342,7 +1586,7 @@
                 const tb = new Date(b.timestamp || 0).getTime() || 0;
                 return tb - ta;
             });
-            displayList.forEach(item => {
+            displayList.forEach((item, idx) => {
                 const dateObj = new Date(item.timestamp);
                 const timeStr = !isNaN(dateObj.getTime())
                     ? dateObj.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }) + ', ' + dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
@@ -1360,6 +1604,7 @@
                 const cardBox = document.createElement('div');
                 cardBox.className = 'history-card-box' + (hasProducts ? ' has-products' : '');
                 cardBox.id = 'h-box-' + item.id;
+                cardBox.style.setProperty('--delay', idx);
 
                 const actionHtml = item.cancelled
                     ? '<span class="cancelled-badge">Отменено ↺</span>'
@@ -1368,7 +1613,7 @@
                        </button>`;
 
                 const expandBadge = hasProducts
-                    ? `<div class="history-badge-expand">🧾 Позиций: ${products.length} ▼</div>`
+                    ? `<div class="history-badge-expand" data-count="${products.length}">🧾 Позиций: ${products.length} ▼</div>`
                     : '';
 
                 let productsHtml = '';
@@ -1385,9 +1630,11 @@
                     `).join('');
 
                     productsHtml = `
-                        <div class="history-products-list" id="prods-${item.id}">
-                            <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Состав чека:</div>
-                            ${rowsHtml}
+                        <div class="history-products-wrapper" id="prods-${item.id}">
+                            <div class="history-products-inner">
+                                <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Состав чека:</div>
+                                ${rowsHtml}
+                            </div>
                         </div>
                     `;
                 }
@@ -1416,17 +1663,27 @@
         function toggleProducts(id, ev) {
             if (ev && ev.target && ev.target.closest('.history-undo-btn')) return;
             const el = document.getElementById('prods-' + id);
+            const box = document.getElementById('h-box-' + id);
+            const badge = box ? box.querySelector('.history-badge-expand') : null;
             if (el) {
-                el.classList.toggle('open');
+                const isOpen = el.classList.toggle('open');
+                if (badge) {
+                    const count = badge.getAttribute('data-count') || '';
+                    badge.innerHTML = isOpen ? `🧾 Позиций: ${count} ▲` : `🧾 Позиций: ${count} ▼`;
+                }
                 if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
             }
         }
 
         async function undoTransaction(id, category, amount, isIncome) {
             const btn = event ? event.target.closest('button') : null;
+            const cardBox = document.getElementById('h-box-' + id);
             if (btn) {
                 btn.disabled = true;
-                btn.innerText = 'Отменяем...';
+                btn.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" class="spinning" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Отменяем...`;
+            }
+            if (cardBox) {
+                cardBox.classList.add('cancelling-pulse');
             }
 
             if (tg && tg.HapticFeedback) {
@@ -1499,12 +1756,12 @@
     </script>
 
     <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav" style="justify-content: center; gap: 40px;">
-        <button class="nav-item active" id="nav-btn-overview" onclick="switchScreen('overview')" style="min-width: 110px;">
+    <div class="bottom-nav">
+        <button class="nav-item active" id="nav-btn-overview" onclick="switchScreen('overview')">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span>Обзор</span>
         </button>
-        <button class="nav-item" id="nav-btn-history" onclick="switchScreen('history')" style="min-width: 110px;">
+        <button class="nav-item" id="nav-btn-history" onclick="switchScreen('history')">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <span>История</span>
         </button>
